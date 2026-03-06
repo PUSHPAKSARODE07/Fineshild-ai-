@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinShield AI · Login</title>
+    <!-- Tailwind + fonts + icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b0e14;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(139, 92, 246, 0.2);
+            pointer-events: none;
+            z-index: 0;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-20px) translateX(10px); }
+            100% { transform: translateY(0px) translateX(0px); }
+        }
+        .glass-card {
+            background: rgba(15, 20, 30, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 30px rgba(139, 92, 246, 0.3);
+            z-index: 10;
+            position: relative;
+        }
+        .input-field {
+            background: rgba(30, 35, 45, 0.6);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 1rem;
+            padding: 0.75rem 1rem;
+            color: white;
+            width: 100%;
+            transition: all 0.2s;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #a78bfa;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+        }
+        .input-field::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6, #d946ef);
+            border: none;
+            border-radius: 1rem;
+            padding: 0.75rem;
+            font-weight: 600;
+            color: white;
+            width: 100%;
+            transition: all 0.2s;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+        }
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.8);
+        }
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .social-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 1rem;
+            padding: 0.6rem;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: white;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .social-btn:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: #a78bfa;
+        }
+        .glow-text {
+            text-shadow: 0 0 8px rgba(139, 92, 246, 0.7);
+        }
+        .error-message {
+            color: #f87171;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            min-height: 1.2rem;
+        }
+        /* OTP input styles */
+        .otp-input {
+            width: 3rem;
+            height: 3rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: rgba(30, 35, 45, 0.8);
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            border-radius: 0.75rem;
+            color: white;
+            transition: all 0.2s;
+        }
+        .otp-input:focus {
+            outline: none;
+            border-color: #a78bfa;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.6);
+        }
+        /* Modal backdrop */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- animated particles (10 pieces) -->
+    <script>
+        (function() {
+            for (let i = 0; i < 12; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 200 + 50;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.background = `rgba(${Math.random()*100+100}, ${Math.random()*50}, 255, 0.1)`;
+                particle.style.filter = 'blur(40px)';
+                particle.style.animation = `float ${Math.random()*10+10}s infinite`;
+                document.body.appendChild(particle);
+            }
+        })();
+    </script>
+
+    <!-- main login card -->
+    <div class="glass-card w-full max-w-md p-8 m-4" id="loginCard">
+        <!-- logo and title -->
+        <div class="text-center mb-8">
+            <i class="fas fa-shield-halved text-purple-400 text-5xl glow-text"></i>
+            <h1 class="text-3xl font-bold text-white mt-2 glow-text">FinShield AI</h1>
+            <p class="text-purple-300/70 text-sm">Secure access to your financial dashboard</p>
+        </div>
+
+        <!-- login form -->
+        <form id="loginForm">
+            <!-- email field -->
+            <div class="mb-4">
+                <label class="block text-purple-300 text-sm font-medium mb-2">Email or Username</label>
+                <div class="relative">
+                    <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-purple-400/70"></i>
+                    <input type="text" id="email" class="input-field pl-12" placeholder="you@example.com" autocomplete="email">
+                </div>
+                <div id="emailError" class="error-message"></div>
+            </div>
+
+            <!-- password field -->
+            <div class="mb-4">
+                <label class="block text-purple-300 text-sm font-medium mb-2">Password</label>
+                <div class="relative">
+                    <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-purple-400/70"></i>
+                    <input type="password" id="password" class="input-field pl-12 pr-12" placeholder="••••••••" autocomplete="current-password">
+                    <button type="button" id="togglePassword" class="absolute right-4 top-1/2 -translate-y-1/2 text-purple-400/70 hover:text-purple-300">
+                        <i class="fas fa-eye" id="toggleIcon"></i>
+                    </button>
+                </div>
+                <div id="passwordError" class="error-message"></div>
+            </div>
+
+            <!-- remember me & forgot password -->
+            <div class="flex justify-between items-center mb-6 text-sm">
+                <label class="flex items-center gap-2 text-purple-300/70">
+                    <input type="checkbox" class="rounded border-purple-500/30 bg-transparent" checked>
+                    Remember me
+                </label>
+                <a href="#" class="text-pink-400 hover:text-pink-300 transition" id="forgotPassword">Forgot password?</a>
+            </div>
+
+            <!-- login button -->
+            <button type="submit" class="btn-primary" id="loginButton">
+                <span id="buttonText">Sign in</span>
+                <i class="fas fa-spinner fa-spin hidden ml-2" id="spinner"></i>
+            </button>
+
+            <!-- social login -->
+            <div class="relative my-6">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-purple-500/20"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                    <span class="px-3 bg-[#131824] text-purple-300/50">or continue with</span>
+                </div>
+            </div>
+
+            <div class="flex gap-3">
+                <button type="button" class="social-btn" id="googleLogin"><i class="fab fa-google text-pink-400"></i> Google</button>
+            </div>
+
+            <!-- register link -->
+            <p class="text-center text-purple-300/50 text-sm mt-6">
+                Don't have an account? 
+                <a href="register.html" class="text-pink-400 hover:text-pink-300 font-medium">Create free account</a>
+            </p>
+        </form>
+
+        <!-- demo credentials hint -->
+        <div class="mt-4 p-3 bg-purple-900/20 border border-purple-500/30 rounded-xl text-xs text-purple-300/70 text-center" id="demoHint">
+            <i class="fas fa-info-circle mr-1"></i> Demo: use <span class="font-mono text-pink-300">demo@finshield.ai</span> / <span class="font-mono text-pink-300">password123</span>
+        </div>
+    </div>
+
+    <!-- 2FA Modal (hidden by default) -->
+    <div id="otpModal" class="modal-backdrop hidden">
+        <div class="glass-card w-full max-w-md p-8 m-4 relative">
+            <!-- close button -->
+            <button id="closeModal" class="absolute top-4 right-4 text-purple-400 hover:text-purple-300 text-xl">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="text-center mb-6">
+                <i class="fas fa-shield-halved text-purple-400 text-4xl glow-text"></i>
+                <h2 class="text-2xl font-bold text-white mt-2">Two-Factor Authentication</h2>
+                <p class="text-purple-300/70 text-sm">Enter the 6-digit code sent to your email</p>
+            </div>
+
+            <!-- OTP inputs -->
+            <div class="flex justify-center gap-2 mb-6">
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" id="otp1">
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" id="otp2">
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" id="otp3">
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" id="otp4">
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" id="otp5">
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" id="otp6">
+            </div>
+
+            <!-- timer and resend -->
+            <div class="flex justify-between items-center mb-6 text-sm">
+                <span class="text-purple-300/70">Code expires in <span id="timer" class="text-pink-400 font-bold">30</span>s</span>
+                <button id="resendBtn" class="text-purple-400 hover:text-purple-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed" disabled>Resend Code</button>
+            </div>
+
+            <!-- verify button -->
+            <button id="verifyBtn" class="btn-primary">Verify & Continue</button>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Password visibility toggle
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggleIcon');
+
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.type === 'password' ? 'text' : 'password';
+                passwordInput.type = type;
+                toggleIcon.classList.toggle('fa-eye');
+                toggleIcon.classList.toggle('fa-eye-slash');
+            });
+
+            // Form validation and login simulation
+            const loginForm = document.getElementById('loginForm');
+            const emailInput = document.getElementById('email');
+            const passwordInputField = document.getElementById('password');
+            const emailError = document.getElementById('emailError');
+            const passwordError = document.getElementById('passwordError');
+            const loginButton = document.getElementById('loginButton');
+            const buttonText = document.getElementById('buttonText');
+            const spinner = document.getElementById('spinner');
+            const loginCard = document.getElementById('loginCard');
+            const otpModal = document.getElementById('otpModal');
+            const closeModal = document.getElementById('closeModal');
+            const verifyBtn = document.getElementById('verifyBtn');
+            const resendBtn = document.getElementById('resendBtn');
+            const timerSpan = document.getElementById('timer');
+
+            // OTP inputs
+            const otpInputs = [
+                document.getElementById('otp1'),
+                document.getElementById('otp2'),
+                document.getElementById('otp3'),
+                document.getElementById('otp4'),
+                document.getElementById('otp5'),
+                document.getElementById('otp6')
+            ];
+
+            let timerInterval;
+            let timeLeft = 30;
+            let canResend = false;
+
+            // Forgot password link
+            document.getElementById('forgotPassword').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('🔐 Password reset link would be sent to your email (demo).');
+            });
+
+            // Google login
+            document.getElementById('googleLogin').addEventListener('click', function() {
+                alert('🌐 Google login demo — redirect would happen here.');
+            });
+
+            // Close modal
+            closeModal.addEventListener('click', function() {
+                otpModal.classList.add('hidden');
+                resetOTP();
+                clearTimer();
+                // Re-enable login button if needed
+                loginButton.disabled = false;
+                buttonText.textContent = 'Sign in';
+                spinner.classList.add('hidden');
+            });
+
+            // Resend OTP
+            resendBtn.addEventListener('click', function() {
+                if (!canResend) return;
+                // Reset timer
+                timeLeft = 30;
+                timerSpan.textContent = timeLeft;
+                canResend = false;
+                resendBtn.disabled = true;
+                // Clear OTP fields
+                resetOTP();
+                // Start timer again
+                startTimer();
+                // Focus first field
+                otpInputs[0].focus();
+                // Show message (optional)
+                alert('📧 New code sent to your email (demo).');
+            });
+
+            // Helper functions
+            function resetOTP() {
+                otpInputs.forEach(input => input.value = '');
+                otpInputs[0].focus();
+            }
+
+            function clearTimer() {
+                if (timerInterval) clearInterval(timerInterval);
+                timerInterval = null;
+            }
+
+            function startTimer() {
+                clearTimer();
+                timerInterval = setInterval(() => {
+                    timeLeft--;
+                    timerSpan.textContent = timeLeft;
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        timerSpan.textContent = '0';
+                        canResend = true;
+                        resendBtn.disabled = false;
+                        // Optionally disable verify?
+                        verifyBtn.disabled = true;
+                    } else {
+                        canResend = false;
+                        resendBtn.disabled = true;
+                        verifyBtn.disabled = false;
+                    }
+                }, 1000);
+            }
+
+            // OTP input handling (auto-focus)
+            otpInputs.forEach((input, index) => {
+                input.addEventListener('input', function(e) {
+                    // Allow only digits
+                    this.value = this.value.replace(/[^0-9]/g, '').slice(0, 1);
+                    if (this.value && index < otpInputs.length - 1) {
+                        otpInputs[index + 1].focus();
+                    }
+                    // Auto-verify when all filled
+                    if (otpInputs.every(inp => inp.value.length === 1)) {
+                        // Optionally auto-submit, but we have verify button
+                    }
+                });
+
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace' && !this.value && index > 0) {
+                        otpInputs[index - 1].focus();
+                    }
+                });
+            });
+
+            // Verify button
+            verifyBtn.addEventListener('click', function() {
+                const otp = otpInputs.map(inp => inp.value).join('');
+                if (otp.length !== 6) {
+                    alert('Please enter the full 6-digit code.');
+                    return;
+                }
+                // Demo: accept any 6-digit code or a fixed one like "123456"
+                if (otp === '123456' || otp.length === 6) { // for demo, any 6 digits works
+                    // Success
+                    window.location.href = 'dashboard.html';
+                } else {
+                    alert('Invalid code. Please try again.');
+                }
+            });
+
+            // Login form submission
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Reset errors
+                emailError.textContent = '';
+                passwordError.textContent = '';
+
+                const email = emailInput.value.trim();
+                const password = passwordInputField.value.trim();
+
+                let isValid = true;
+
+                // Email validation
+                if (!email) {
+                    emailError.textContent = 'Email is required';
+                    isValid = false;
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && !/^[a-zA-Z0-9_]+$/.test(email)) {
+                    if (!/^[a-zA-Z0-9_]+$/.test(email)) {
+                        emailError.textContent = 'Enter a valid email or username';
+                        isValid = false;
+                    }
+                }
+
+                // Password validation
+                if (!password) {
+                    passwordError.textContent = 'Password is required';
+                    isValid = false;
+                } else if (password.length < 6) {
+                    passwordError.textContent = 'Password must be at least 6 characters';
+                    isValid = false;
+                }
+
+                if (!isValid) return;
+
+                // Simulate loading state
+                loginButton.disabled = true;
+                buttonText.textContent = 'Signing in...';
+                spinner.classList.remove('hidden');
+
+                // Simulate API call with timeout
+                setTimeout(() => {
+                    // Hide loading
+                    loginButton.disabled = false;
+                    buttonText.textContent = 'Sign in';
+                    spinner.classList.add('hidden');
+
+                    // Demo credentials check (optional)
+                    if ((email === 'demo@finshield.ai' || email === 'demo') && password === 'password123') {
+                        // Show 2FA modal
+                        otpModal.classList.remove('hidden');
+                        // Reset OTP and timer
+                        resetOTP();
+                        timeLeft = 30;
+                        timerSpan.textContent = timeLeft;
+                        startTimer();
+                    } else {
+                        // For demo, also allow any valid input to proceed (but show 2FA anyway)
+                        otpModal.classList.remove('hidden');
+                        resetOTP();
+                        timeLeft = 30;
+                        timerSpan.textContent = timeLeft;
+                        startTimer();
+                    }
+                }, 1500);
+            });
+
+            // Prefill demo credentials on hint click
+            document.getElementById('demoHint').addEventListener('click', function() {
+                emailInput.value = 'demo@finshield.ai';
+                passwordInputField.value = 'password123';
+            });
+        })();
+    </script>
+</body>
+</html>

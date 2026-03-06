@@ -1,0 +1,538 @@
+/* ===== FinShield AI Global Styles ===== */
+/* Purple/Pink Cyberpunk Theme */
+/* Author: FinShield AI Team */
+/* Version: 1.0 */
+
+/* ===== Base & Reset ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #0b0e14;
+    color: #e2e8f0;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== Particles Background ===== */
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(139, 92, 246, 0.2);
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px) translateX(0px); }
+    50% { transform: translateY(-20px) translateX(10px); }
+    100% { transform: translateY(0px) translateX(0px); }
+}
+
+/* ===== Glassmorphism Cards ===== */
+.glass-card {
+    background: rgba(15, 20, 30, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 2rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 30px rgba(139, 92, 246, 0.3);
+    z-index: 10;
+    position: relative;
+}
+
+.glass-card-sm {
+    background: rgba(20, 25, 35, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 1rem;
+}
+
+/* ===== Buttons ===== */
+.btn-primary {
+    background: linear-gradient(135deg, #8b5cf6, #d946ef);
+    border: none;
+    border-radius: 0.75rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    color: white;
+    transition: all 0.2s;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+}
+
+.btn-primary:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.8);
+}
+
+.btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 0.75rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    color: white;
+    transition: all 0.2s;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+}
+
+.btn-secondary:hover {
+    background: rgba(139, 92, 246, 0.2);
+    border-color: #a78bfa;
+}
+
+.btn-secondary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-scale {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-scale:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+}
+
+/* ===== Typography & Text Effects ===== */
+.glow-text {
+    text-shadow: 0 0 8px rgba(139, 92, 246, 0.7);
+}
+
+.badge {
+    background: rgba(139, 92, 246, 0.2);
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    border-radius: 2rem;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    color: #a78bfa;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.badge-success {
+    background: rgba(74, 222, 128, 0.2);
+    border-color: #4ade80;
+    color: #4ade80;
+}
+
+.badge-warning {
+    background: rgba(251, 191, 36, 0.2);
+    border-color: #fbbf24;
+    color: #fbbf24;
+}
+
+.badge-danger {
+    background: rgba(244, 63, 94, 0.2);
+    border-color: #f43f5e;
+    color: #f43f5e;
+}
+
+/* ===== Form Elements ===== */
+.input-field {
+    background: rgba(30, 35, 45, 0.6);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 1rem;
+    padding: 0.75rem 1rem;
+    color: white;
+    width: 100%;
+    transition: all 0.2s;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #a78bfa;
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+}
+
+.input-field::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.input-field.error {
+    border-color: #f87171;
+    box-shadow: 0 0 15px rgba(248, 113, 113, 0.5);
+}
+
+.filter-input {
+    background: rgba(30, 35, 45, 0.8);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 0.75rem;
+    padding: 0.5rem 1rem;
+    color: white;
+    width: 100%;
+}
+
+.filter-input:focus {
+    outline: none;
+    border-color: #a78bfa;
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+}
+
+.social-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 1rem;
+    padding: 0.6rem;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: white;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.social-btn:hover {
+    background: rgba(139, 92, 246, 0.2);
+    border-color: #a78bfa;
+}
+
+/* OTP Inputs */
+.otp-input {
+    width: 3rem;
+    height: 3rem;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    background: rgba(30, 35, 45, 0.8);
+    border: 1px solid rgba(139, 92, 246, 0.5);
+    border-radius: 0.75rem;
+    color: white;
+    transition: all 0.2s;
+}
+
+.otp-input:focus {
+    outline: none;
+    border-color: #a78bfa;
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.6);
+}
+
+/* Checkbox */
+input[type="checkbox"] {
+    border-radius: 0.25rem;
+    border: 1px solid rgba(139, 92, 246, 0.5);
+    background: transparent;
+    color: #8b5cf6;
+}
+
+/* ===== Tables ===== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    padding: 1rem 0.5rem 0.5rem 0.5rem;
+    color: #a78bfa;
+    font-weight: 500;
+    font-size: 0.8rem;
+    border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+td {
+    padding: 0.75rem 0.5rem;
+    border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+}
+
+tr:hover td {
+    background: rgba(139, 92, 246, 0.05);
+}
+
+/* ===== Dashboard Specific ===== */
+.stat-card {
+    background: rgba(30, 35, 45, 0.6);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.kpi-card {
+    background: rgba(30, 35, 45, 0.6);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 1rem;
+    padding: 1.25rem;
+}
+
+.metric-box {
+    background: rgba(30, 35, 45, 0.6);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.activity-item {
+    background: rgba(30, 35, 45, 0.4);
+    border-left: 4px solid #d946ef;
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.alert-item {
+    background: rgba(30, 35, 45, 0.4);
+    border-left: 4px solid #f43f5e;
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.alert-item.low {
+    border-left-color: #fbbf24;
+}
+
+.alert-item.normal {
+    border-left-color: #4ade80;
+}
+
+/* Progress Bar */
+.progress-bar {
+    height: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 0.25rem;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #8b5cf6, #d946ef);
+    transition: width 0.3s;
+}
+
+/* Heatmap Cells */
+.heatmap-cell {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.375rem;
+    transition: all 0.2s;
+}
+
+.heatmap-cell:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.8);
+}
+
+/* Ticker Animation */
+.ticker-item {
+    animation: ticker 0.5s ease-in-out;
+}
+
+@keyframes ticker {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Navbar ===== */
+.navbar {
+    background: rgba(15, 20, 30, 0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+/* ===== Modals ===== */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ===== File Upload ===== */
+.upload-zone {
+    border: 2px dashed rgba(139, 92, 246, 0.5);
+    border-radius: 1.5rem;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.upload-zone:hover {
+    border-color: #a78bfa;
+    background: rgba(139, 92, 246, 0.1);
+}
+
+.upload-zone.dragover {
+    border-color: #a78bfa;
+    background: rgba(139, 92, 246, 0.2);
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+}
+
+.file-item {
+    background: rgba(30, 35, 45, 0.6);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 1rem;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+/* ===== Custom Scrollbar ===== */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(139, 92, 246, 0.1);
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(139, 92, 246, 0.5);
+    border-radius: 10px;
+}
+
+/* Hide scrollbar for clean layouts */
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* ===== Utility Classes ===== */
+.hidden {
+    display: none;
+}
+
+.error-message {
+    color: #f87171;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    min-height: 1.2rem;
+}
+
+.success-message {
+    color: #4ade80;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+}
+
+/* Gradient text */
+.gradient-text {
+    background: linear-gradient(135deg, #8b5cf6, #d946ef);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Big numbers */
+.big-number {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(135deg, #8b5cf6, #d946ef);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .otp-input {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1.2rem;
+    }
+
+    .big-number {
+        font-size: 3rem;
+    }
+
+    .heatmap-cell {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .glass-card {
+        border-radius: 1.5rem;
+    }
+
+    .btn-primary, .btn-secondary {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* ===== Background Logo (for login page) ===== */
+.background-logo-right {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: right;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.12;
+    max-width: 600px;
+}
+
+.background-logo-right .brand {
+    font-size: 5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #8b5cf6, #d946ef);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.background-logo-right .tagline {
+    font-size: 1.8rem;
+    color: #a78bfa;
+    text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 1200px) {
+    .background-logo-right .brand {
+        font-size: 3.5rem;
+    }
+    .background-logo-right .tagline {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .background-logo-right {
+        display: none;
+    }
+}

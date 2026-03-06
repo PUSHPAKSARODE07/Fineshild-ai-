@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinShield AI · Register</title>
+    <!-- Tailwind + fonts + icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b0e14;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(139, 92, 246, 0.2);
+            pointer-events: none;
+            z-index: 0;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-20px) translateX(10px); }
+            100% { transform: translateY(0px) translateX(0px); }
+        }
+        .glass-card {
+            background: rgba(15, 20, 30, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 30px rgba(139, 92, 246, 0.3);
+            z-index: 10;
+            position: relative;
+        }
+        .input-field {
+            background: rgba(30, 35, 45, 0.6);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 1rem;
+            padding: 0.75rem 1rem;
+            color: white;
+            width: 100%;
+            transition: all 0.2s;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #a78bfa;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+        }
+        .input-field::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+        .input-field.error {
+            border-color: #f87171;
+            box-shadow: 0 0 15px rgba(248, 113, 113, 0.5);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6, #d946ef);
+            border: none;
+            border-radius: 1rem;
+            padding: 0.75rem;
+            font-weight: 600;
+            color: white;
+            width: 100%;
+            transition: all 0.2s;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+        }
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.8);
+        }
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .social-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 1rem;
+            padding: 0.6rem;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: white;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .social-btn:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: #a78bfa;
+        }
+        .glow-text {
+            text-shadow: 0 0 8px rgba(139, 92, 246, 0.7);
+        }
+        .error-message {
+            color: #f87171;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            min-height: 1.2rem;
+        }
+        .success-message {
+            color: #4ade80;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+        }
+        .password-strength {
+            height: 0.25rem;
+            border-radius: 0.25rem;
+            margin-top: 0.5rem;
+            transition: all 0.3s;
+        }
+        .strength-weak { background: #f87171; width: 33%; }
+        .strength-medium { background: #fbbf24; width: 66%; }
+        .strength-strong { background: #4ade80; width: 100%; }
+    </style>
+</head>
+<body>
+    <!-- animated particles -->
+    <script>
+        (function() {
+            for (let i = 0; i < 12; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 200 + 50;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.background = `rgba(${Math.random()*100+100}, ${Math.random()*50}, 255, 0.1)`;
+                particle.style.filter = 'blur(40px)';
+                particle.style.animation = `float ${Math.random()*10+10}s infinite`;
+                document.body.appendChild(particle);
+            }
+        })();
+    </script>
+
+    <!-- main register card -->
+    <div class="glass-card w-full max-w-md p-8 m-4">
+        <!-- logo and title -->
+        <div class="text-center mb-6">
+            <i class="fas fa-shield-halved text-purple-400 text-5xl glow-text"></i>
+            <h1 class="text-3xl font-bold text-white mt-2 glow-text">FinShield AI</h1>
+            <p class="text-purple-300/70 text-sm">Create your secure account</p>
+        </div>
+
+        <!-- registration form -->
+        <form id="registerForm">
+            <!-- full name -->
+            <div class="mb-4">
+                <label class="block text-purple-300 text-sm font-medium mb-2">Full Name</label>
+                <div class="relative">
+                    <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-purple-400/70"></i>
+                    <input type="text" id="fullName" class="input-field pl-12" placeholder="John Doe" autocomplete="name">
+                </div>
+                <div id="fullNameError" class="error-message"></div>
+            </div>
+
+            <!-- email -->
+            <div class="mb-4">
+                <label class="block text-purple-300 text-sm font-medium mb-2">Email</label>
+                <div class="relative">
+                    <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-purple-400/70"></i>
+                    <input type="email" id="email" class="input-field pl-12" placeholder="you@example.com" autocomplete="email">
+                </div>
+                <div id="emailError" class="error-message"></div>
+            </div>
+
+            <!-- password -->
+            <div class="mb-4">
+                <label class="block text-purple-300 text-sm font-medium mb-2">Password</label>
+                <div class="relative">
+                    <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-purple-400/70"></i>
+                    <input type="password" id="password" class="input-field pl-12 pr-12" placeholder="••••••••" autocomplete="new-password">
+                    <button type="button" id="togglePassword" class="absolute right-4 top-1/2 -translate-y-1/2 text-purple-400/70 hover:text-purple-300">
+                        <i class="fas fa-eye" id="toggleIcon"></i>
+                    </button>
+                </div>
+                <!-- password strength meter -->
+                <div class="password-strength" id="strengthMeter"></div>
+                <div id="passwordError" class="error-message"></div>
+                <div id="strengthText" class="text-xs text-purple-300/70 mt-1"></div>
+            </div>
+
+            <!-- confirm password -->
+            <div class="mb-4">
+                <label class="block text-purple-300 text-sm font-medium mb-2">Confirm Password</label>
+                <div class="relative">
+                    <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-purple-400/70"></i>
+                    <input type="password" id="confirmPassword" class="input-field pl-12" placeholder="••••••••" autocomplete="off">
+                </div>
+                <div id="confirmError" class="error-message"></div>
+            </div>
+
+            <!-- terms and conditions -->
+            <div class="flex items-center gap-2 mb-6">
+                <input type="checkbox" id="terms" class="rounded border-purple-500/30 bg-transparent text-purple-600 focus:ring-purple-500">
+                <label for="terms" class="text-purple-300/70 text-sm">
+                    I agree to the <a href="#" class="text-pink-400 hover:text-pink-300">Terms of Service</a> and <a href="#" class="text-pink-400 hover:text-pink-300">Privacy Policy</a>
+                </label>
+            </div>
+            <div id="termsError" class="error-message -mt-4 mb-4"></div>
+
+            <!-- register button -->
+            <button type="submit" class="btn-primary" id="registerButton">
+                <span id="buttonText">Create Account</span>
+                <i class="fas fa-spinner fa-spin hidden ml-2" id="spinner"></i>
+            </button>
+
+            <!-- social sign-up -->
+            <div class="relative my-6">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-purple-500/20"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                    <span class="px-3 bg-[#131824] text-purple-300/50">or sign up with</span>
+                </div>
+            </div>
+
+            <div class="flex gap-3">
+                <button type="button" class="social-btn" id="googleSignup"><i class="fab fa-google text-pink-400"></i> Google</button>
+            </div>
+
+            <!-- login link -->
+            <p class="text-center text-purple-300/50 text-sm mt-6">
+                Already have an account? 
+                <a href="login.html" class="text-pink-400 hover:text-pink-300 font-medium">Sign in</a>
+            </p>
+        </form>
+
+        <!-- demo hint -->
+        <div class="mt-4 p-3 bg-purple-900/20 border border-purple-500/30 rounded-xl text-xs text-purple-300/70 text-center" id="demoHint">
+            <i class="fas fa-info-circle mr-1"></i> Demo: use any email (min 6 char password)
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Password visibility toggle
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggleIcon');
+
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.type === 'password' ? 'text' : 'password';
+                passwordInput.type = type;
+                toggleIcon.classList.toggle('fa-eye');
+                toggleIcon.classList.toggle('fa-eye-slash');
+            });
+
+            // Password strength meter
+            const strengthMeter = document.getElementById('strengthMeter');
+            const strengthText = document.getElementById('strengthText');
+            const passwordField = document.getElementById('password');
+            const confirmField = document.getElementById('confirmPassword');
+            const fullNameInput = document.getElementById('fullName');
+            const emailInput = document.getElementById('email');
+            const termsCheck = document.getElementById('terms');
+
+            // Error spans
+            const fullNameError = document.getElementById('fullNameError');
+            const emailError = document.getElementById('emailError');
+            const passwordError = document.getElementById('passwordError');
+            const confirmError = document.getElementById('confirmError');
+            const termsError = document.getElementById('termsError');
+
+            const registerButton = document.getElementById('registerButton');
+            const buttonText = document.getElementById('buttonText');
+            const spinner = document.getElementById('spinner');
+
+            // Update password strength on input
+            passwordField.addEventListener('input', function() {
+                const password = passwordField.value;
+                const strength = calculateStrength(password);
+                updateStrengthMeter(strength);
+                // Also check confirm password match if both have values
+                if (confirmField.value) validateConfirmPassword();
+            });
+
+            confirmField.addEventListener('input', validateConfirmPassword);
+
+            function calculateStrength(password) {
+                if (!password) return 0;
+                let score = 0;
+                // length
+                if (password.length >= 8) score++;
+                if (password.length >= 12) score++;
+                // contains lowercase & uppercase
+                if (/[a-z]/.test(password) && /[A-Z]/.test(password)) score++;
+                // contains numbers
+                if (/\d/.test(password)) score++;
+                // contains special characters
+                if (/[^a-zA-Z0-9]/.test(password)) score++;
+                return Math.min(score, 4); // 0-4
+            }
+
+            function updateStrengthMeter(score) {
+                strengthMeter.classList.remove('strength-weak', 'strength-medium', 'strength-strong');
+                if (score === 0) {
+                    strengthMeter.style.width = '0%';
+                    strengthMeter.style.background = 'transparent';
+                    strengthText.textContent = '';
+                } else if (score <= 2) {
+                    strengthMeter.classList.add('strength-weak');
+                    strengthText.textContent = 'Weak password';
+                } else if (score === 3) {
+                    strengthMeter.classList.add('strength-medium');
+                    strengthText.textContent = 'Medium password';
+                } else {
+                    strengthMeter.classList.add('strength-strong');
+                    strengthText.textContent = 'Strong password';
+                }
+            }
+
+            function validateConfirmPassword() {
+                const password = passwordField.value;
+                const confirm = confirmField.value;
+                if (confirm && password !== confirm) {
+                    confirmError.textContent = 'Passwords do not match';
+                    confirmField.classList.add('error');
+                } else {
+                    confirmError.textContent = '';
+                    confirmField.classList.remove('error');
+                }
+            }
+
+            // Form submission
+            const registerForm = document.getElementById('registerForm');
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Reset errors
+                fullNameError.textContent = '';
+                emailError.textContent = '';
+                passwordError.textContent = '';
+                confirmError.textContent = '';
+                termsError.textContent = '';
+
+                const fullName = fullNameInput.value.trim();
+                const email = emailInput.value.trim();
+                const password = passwordField.value;
+                const confirm = confirmField.value;
+                const terms = termsCheck.checked;
+
+                let isValid = true;
+
+                // Full name validation
+                if (!fullName) {
+                    fullNameError.textContent = 'Full name is required';
+                    isValid = false;
+                } else if (fullName.length < 2) {
+                    fullNameError.textContent = 'Name must be at least 2 characters';
+                    isValid = false;
+                }
+
+                // Email validation
+                if (!email) {
+                    emailError.textContent = 'Email is required';
+                    isValid = false;
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    emailError.textContent = 'Enter a valid email address';
+                    isValid = false;
+                }
+
+                // Password validation
+                if (!password) {
+                    passwordError.textContent = 'Password is required';
+                    isValid = false;
+                } else if (password.length < 6) {
+                    passwordError.textContent = 'Password must be at least 6 characters';
+                    isValid = false;
+                } else {
+                    const strength = calculateStrength(password);
+                    if (strength < 2) {
+                        passwordError.textContent = 'Password is too weak (add uppercase, numbers, or symbols)';
+                        isValid = false;
+                    }
+                }
+
+                // Confirm password
+                if (password !== confirm) {
+                    confirmError.textContent = 'Passwords do not match';
+                    isValid = false;
+                }
+
+                // Terms
+                if (!terms) {
+                    termsError.textContent = 'You must agree to the terms';
+                    isValid = false;
+                }
+
+                if (!isValid) return;
+
+                // Simulate loading
+                registerButton.disabled = true;
+                buttonText.textContent = 'Creating account...';
+                spinner.classList.remove('hidden');
+
+                // Simulate API call
+                setTimeout(() => {
+                    // Success - redirect to login with success message
+                    alert('✅ Account created successfully! Please log in.');
+                    window.location.href = 'login.html';
+                }, 1500);
+            });
+
+            // Google signup
+            document.getElementById('googleSignup').addEventListener('click', function() {
+                alert('🌐 Google signup demo — redirect would happen here.');
+            });
+
+            // Terms links
+            document.querySelectorAll('a[href="#"]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    alert('📄 Terms / Privacy policy (demo).');
+                });
+            });
+
+            // Demo hint click prefills (optional)
+            document.getElementById('demoHint').addEventListener('click', function() {
+                fullNameInput.value = 'Demo User';
+                emailInput.value = 'demo@finshield.ai';
+                passwordField.value = 'Password123!';
+                confirmField.value = 'Password123!';
+                termsCheck.checked = true;
+                // Trigger strength meter
+                passwordField.dispatchEvent(new Event('input'));
+            });
+        })();
+    </script>
+</body>
+</html>

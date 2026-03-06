@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinShield AI · proactive financial safety</title>
+    <!-- Tailwind + fonts + icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0e14;
+            color: #e2e8f0;
+        }
+        .glow-text {
+            text-shadow: 0 0 8px rgba(139, 92, 246, 0.7);
+        }
+        .neon-border {
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.3), 0 0 30px rgba(236, 72, 153, 0.2);
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-card {
+            animation: float 5s ease-in-out infinite;
+        }
+        @keyframes softPulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+        .pulse-badge {
+            animation: softPulse 2s infinite;
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at 30% 30%, #2e1065, #0b0e14 80%);
+        }
+        .feature-card {
+            background: rgba(20, 25, 40, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            transition: all 0.2s ease;
+        }
+        .feature-card:hover {
+            transform: scale(1.02);
+            border-color: rgba(139, 92, 246, 0.6);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+        }
+        .btn-scale {
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .btn-scale:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+        }
+        .stat-item {
+            border-right: 1px solid rgba(139, 92, 246, 0.2);
+        }
+        .stat-item:last-child {
+            border-right: none;
+        }
+        .image-card {
+            background: rgba(15, 20, 30, 0.8);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 1rem;
+            transition: all 0.2s ease;
+        }
+        .image-card:hover {
+            border-color: rgba(139, 92, 246, 0.6);
+            transform: translateY(-2px);
+        }
+        .bestmoney-link {
+            color: #94a3b8;
+            transition: color 0.2s;
+        }
+        .bestmoney-link:hover {
+            color: #a78bfa;
+        }
+        .testimonial-carousel {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 1rem;
+            padding-bottom: 1rem;
+        }
+        .testimonial-carousel > div {
+            scroll-snap-align: start;
+            flex: 0 0 300px;
+        }
+        .testimonial-carousel::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- navbar (updated with purple theme) -->
+    <nav class="bg-[#0f1219]/90 backdrop-blur-sm border-b border-purple-500/30 sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-shield-halved text-purple-400 text-2xl glow-text"></i>
+                    <span class="font-bold text-xl text-white glow-text">FinShield AI</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#" class="text-purple-300 hover:text-purple-200 text-sm font-medium transition">Home</a>
+                    <a href="#" class="text-purple-300 hover:text-purple-200 text-sm font-medium transition">About</a>
+                    <a href="#" class="text-purple-300 hover:text-purple-200 text-sm font-medium transition">Services</a>
+                    <a href="#" class="text-purple-300 hover:text-purple-200 text-sm font-medium transition">Invest</a>
+                    <a href="#" class="text-purple-300 hover:text-purple-200 text-sm font-medium transition">Blog</a>
+                    <a href="#" class="text-purple-300 hover:text-purple-200 text-sm font-medium transition">Contact</a>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <a href="login.html" class="text-purple-300 hover:text-purple-200 px-3 py-2 text-sm font-medium transition">Login</a>
+                    <a href="register.html" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-md btn-scale transition">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- hero with new dashboard card (left text, right card) -->
+    <section class="hero-gradient max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 rounded-3xl mt-4 border border-pink-500/20 neon-border">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h1 class="text-4xl md:text-5xl font-bold text-white leading-tight">Empower Your Financial Future <span class="text-purple-400 glow-text">with AI Fraud Prevention</span></h1>
+                <p class="text-lg text-purple-100/80 mt-4 max-w-lg">Smart fraud detection, real-time alerts, and secure transactions. FinShield AI monitors your finances 24/7.</p>
+                <div class="flex flex-wrap gap-4 mt-8">
+                    <a href="register.html" class="bg-purple-600 hover:bg-purple-500 text-white px-6 py-3 rounded-xl font-semibold shadow-md btn-scale transition flex items-center gap-2"><i class="fas fa-shield-alt"></i> Get Started</a>
+                    <a href="#" class="bg-transparent border border-purple-500 hover:border-purple-400 text-purple-300 px-6 py-3 rounded-xl font-semibold transition btn-scale flex items-center gap-2"><i class="fas fa-play text-purple-400"></i>Login<i class="fas fa-chevron-down text-xs ml-1"></i></a>
+                </div>
+                <div class="mt-6 text-purple-300/70 text-sm">Trusted by 50,000+ clients</div>
+            </div>
+            <div class="relative">
+                <!-- NEW DASHBOARD CARD (replaces live fraud report) -->
+                <div class="bg-[#131824] p-4 rounded-2xl shadow-2xl border border-purple-500/30 float-card backdrop-blur-sm">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-semibold bg-purple-900/50 text-purple-300 px-2 py-1 rounded-full pulse-badge flex items-center gap-1 border border-purple-500/50"><i class="fas fa-chart-pie text-purple-400 mr-1"></i> dashboard overview · real-time</span>
+                        <i class="fas fa-chevron-right text-purple-400"></i>
+                    </div>
+                    <!-- metrics grid (2x2) -->
+                    <div class="grid grid-cols-2 gap-3 mb-3">
+                        <div class="bg-[#1e2434] p-3 rounded-xl border border-purple-500/20">
+                            <div class="text-xs text-purple-300 mb-1">Total Income</div>
+                            <div class="text-xl font-bold text-green-400">$1,200</div>
+                            <div class="text-xs text-purple-300/60">During last month</div>
+                        </div>
+                        <div class="bg-[#1e2434] p-3 rounded-xl border border-pink-500/20">
+                            <div class="text-xs text-pink-300 mb-1">Total Expansions</div>
+                            <div class="text-xl font-bold text-amber-400">$4,500K</div>
+                            <div class="text-xs text-purple-300/60">Starting 2 months</div>
+                        </div>
+                        <div class="bg-[#1e2434] p-3 rounded-xl border border-purple-500/20">
+                            <div class="text-xs text-purple-300 mb-1">Total Loans</div>
+                            <div class="text-xl font-bold text-cyan-400">$6,100K</div>
+                            <div class="text-xs text-purple-300/60">Starting 3 months</div>
+                        </div>
+                        <div class="bg-[#1e2434] p-3 rounded-xl border border-pink-500/20">
+                            <div class="text-xs text-pink-300 mb-1">Order</div>
+                            <div class="text-xl font-bold text-white">4,764</div>
+                            <div class="text-xs text-purple-300/60">Volume</div>
+                        </div>
+                    </div>
+                    <!-- earnings & quick transactions row -->
+                    <div class="grid grid-cols-2 gap-3 mb-3">
+                        <div class="bg-[#1e2434] p-2 rounded-xl border border-purple-500/20 flex items-center justify-between">
+                            <span class="text-xs text-purple-300">Earnings</span>
+                            <span class="text-sm font-bold text-green-400">$5,078.78</span>
+                        </div>
+                        <div class="bg-[#1e2434] p-2 rounded-xl border border-pink-500/20 flex items-center justify-between">
+                            <span class="text-xs text-pink-300">Quick Trans.</span>
+                            <span class="text-sm font-bold text-white">$57.00</span>
+                        </div>
+                    </div>
+                    <!-- recent activities (compact) -->
+                    <div class="bg-pink-900/20 border border-pink-500/30 p-2 rounded-xl text-xs mb-2">
+                        <div class="font-medium text-pink-300 mb-1">⬇️ Recent activities</div>
+                        <div class="flex justify-between text-purple-100/70">
+                            <span>Share Loan: $1,000</span>
+                            <span class="text-green-400">5%</span>
+                        </div>
+                        <div class="flex justify-between text-purple-100/70">
+                            <span>William Test: $1,000</span>
+                            <span class="text-green-400">5%</span>
+                        </div>
+                        <div class="flex justify-between text-purple-100/70">
+                            <span>Draw Transaction</span>
+                            <span>$1,000</span>
+                        </div>
+                    </div>
+                    <!-- total transactions line (like counter) -->
+                    <div class="mt-2 text-xs text-purple-400/60 flex items-center gap-2">
+                        <i class="fas fa-shield-check text-purple-400"></i> 
+                        <span><span class="font-semibold text-purple-300 text-sm">4,764</span> total transactions</span>
+                    </div>
+                </div>
+                <!-- decorative glows (unchanged) -->
+                <div class="absolute -bottom-4 -right-4 w-32 h-32 bg-pink-600 rounded-full opacity-20 blur-3xl -z-10"></div>
+                <div class="absolute -top-4 -left-4 w-32 h-32 bg-purple-600 rounded-full opacity-20 blur-3xl -z-10"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- stats row (updated purple) -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 bg-[#131824]/60 border border-purple-500/20 rounded-2xl p-6 backdrop-blur-sm">
+            <div class="stat-item text-center md:border-r border-purple-500/20">
+                <div class="text-2xl font-bold text-purple-400">5+</div>
+                <div class="text-xs text-purple-300/70">Years Experience</div>
+            </div>
+            <div class="stat-item text-center md:border-r border-purple-500/20">
+                <div class="text-2xl font-bold text-purple-400">50K+</div>
+                <div class="text-xs text-purple-300/70">Happy Customers</div>
+            </div>
+            <div class="stat-item text-center md:border-r border-purple-500/20">
+                <div class="text-2xl font-bold text-purple-400">$1B+</div>
+                <div class="text-xs text-purple-300/70">Assets Monitored</div>
+            </div>
+            <div class="stat-item text-center">
+                <div class="text-2xl font-bold text-purple-400">24/7</div>
+                <div class="text-xs text-purple-300/70">Support</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- four feature cards (updated purple) -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h2 class="text-3xl font-bold text-center text-white mb-12 glow-text">Our AI-Powered Solutions</h2>
+        <div class="grid md:grid-cols-4 gap-6">
+            <div class="feature-card p-6 rounded-2xl text-center">
+                <div class="w-14 h-14 bg-purple-900/50 rounded-xl flex items-center justify-center mx-auto mb-4 border border-purple-500/50"><i class="fas fa-chart-line text-purple-400 text-2xl"></i></div>
+                <h3 class="text-lg font-semibold text-white mb-2">Pattern Intelligence</h3>
+                <p class="text-sm text-purple-100/70">Detect spending spikes and missed payments early.</p>
+            </div>
+            <div class="feature-card p-6 rounded-2xl text-center">
+                <div class="w-14 h-14 bg-pink-900/50 rounded-xl flex items-center justify-center mx-auto mb-4 border border-pink-500/50"><i class="fas fa-shield text-pink-400 text-2xl"></i></div>
+                <h3 class="text-lg font-semibold text-white mb-2">Fraud Scoring</h3>
+                <p class="text-sm text-purple-100/70">Real-time anomaly detection and risk scoring.</p>
+            </div>
+            <div class="feature-card p-6 rounded-2xl text-center">
+                <div class="w-14 h-14 bg-purple-900/50 rounded-xl flex items-center justify-center mx-auto mb-4 border border-purple-500/50"><i class="fas fa-message-exclamation text-purple-400 text-2xl"></i></div>
+                <h3 class="text-lg font-semibold text-white mb-2">Clear Explanations</h3>
+                <p class="text-sm text-purple-100/70">Human-readable reasons behind every alert.</p>
+            </div>
+            <div class="feature-card p-6 rounded-2xl text-center">
+                <div class="w-14 h-14 bg-pink-900/50 rounded-xl flex items-center justify-center mx-auto mb-4 border border-pink-500/50"><i class="fas fa-clock text-pink-400 text-2xl"></i></div>
+                <h3 class="text-lg font-semibold text-white mb-2">Real-Time Monitoring</h3>
+                <p class="text-sm text-purple-100/70">24/7 surveillance of your financial activity.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: HOW IT WORKS -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-purple-500/20">
+        <h2 class="text-3xl font-bold text-center text-white mb-12 glow-text">How FinShield AI Works</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="feature-card p-6 rounded-2xl text-center">
+                <div class="w-16 h-16 bg-purple-900/50 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-purple-500/50 text-2xl font-bold text-purple-400">1</div>
+                <h3 class="text-xl font-semibold mb-2">Fetch Bank Statements</h3>
+                <p class="text-purple-100/70">We ask for Monthly Bank Statment for Analysis.</p>
+            </div>
+            <div class="feature-card p-6 rounded-2xl text-center">
+                <div class="w-16 h-16 bg-pink-900/50 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-pink-500/50 text-2xl font-bold text-pink-400">2</div>
+                <h3 class="text-xl font-semibold mb-2">AI Analysis</h3>
+                <p class="text-purple-100/70">Our algorithms analyze transactions 24/7 for fraud, stress, and anomalies.</p>
+            </div>
+            <div class="feature-card p-6 rounded-2xl text-center">
+                <div class="w-16 h-16 bg-purple-900/50 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-purple-500/50 text-2xl font-bold text-purple-400">3</div>
+                <h3 class="text-xl font-semibold mb-2">Actionable Alerts</h3>
+                <p class="text-purple-100/70">Get instant alerts with clear explanations so you can act immediately.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: WHY CUSTOMERS LOVE US (carousel) -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h2 class="text-3xl font-bold text-center text-white mb-8 glow-text">Why Customers Love Us</h2>
+        <div class="testimonial-carousel">
+            <div class="feature-card p-6 rounded-2xl w-72 flex-shrink-0">
+                <i class="fas fa-quote-left text-purple-400 text-2xl mb-2"></i>
+                <p class="text-sm italic">"I caught a fraudulent transaction within seconds. Saved me ₹45,000!"</p>
+                <div class="mt-4 flex items-center gap-3">
+                    <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold">RJ</div>
+                    <div><span class="font-semibold">Rajat Jain</span><p class="text-xs text-purple-300/60">Small Business Owner</p></div>
+                </div>
+            </div>
+            <div class="feature-card p-6 rounded-2xl w-72 flex-shrink-0">
+                <i class="fas fa-quote-left text-pink-400 text-2xl mb-2"></i>
+                <p class="text-sm italic">"The stress score helped me adjust my spending and avoid a default."</p>
+                <div class="mt-4 flex items-center gap-3">
+                    <div class="w-8 h-8 bg-pink-600 rounded-full flex items-center justify-center text-white font-bold">SN</div>
+                    <div><span class="font-semibold">Sneha Nair</span><p class="text-xs text-purple-300/60">Freelancer</p></div>
+                </div>
+            </div>
+            <div class="feature-card p-6 rounded-2xl w-72 flex-shrink-0">
+                <i class="fas fa-quote-left text-purple-400 text-2xl mb-2"></i>
+                <p class="text-sm italic">"Finally an app that explains alerts in plain English. Highly recommended!"</p>
+                <div class="mt-4 flex items-center gap-3">
+                    <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold">AM</div>
+                    <div><span class="font-semibold">Arjun Mehta</span><p class="text-xs text-purple-300/60">IT Professional</p></div>
+                </div>
+            </div>
+            <div class="feature-card p-6 rounded-2xl w-72 flex-shrink-0">
+                <i class="fas fa-quote-left text-pink-400 text-2xl mb-2"></i>
+                <p class="text-sm italic">"Real-time monitoring gives me peace of mind. A must-have for everyone."</p>
+                <div class="mt-4 flex items-center gap-3">
+                    <div class="w-8 h-8 bg-pink-600 rounded-full flex items-center justify-center text-white font-bold">PK</div>
+                    <div><span class="font-semibold">Priya Kapoor</span><p class="text-xs text-purple-300/60">CA</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: INTEGRATIONS -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-purple-500/20">
+        <h2 class="text-3xl font-bold text-center text-white mb-8 glow-text">Integrates with your favorite banks</h2>
+        <div class="flex flex-wrap justify-center gap-8">
+            <div class="w-24 h-24 bg-white/5 rounded-2xl flex items-center justify-center border border-purple-500/30"><span class="text-purple-300 font-semibold">SBI</span></div>
+            <div class="w-24 h-24 bg-white/5 rounded-2xl flex items-center justify-center border border-pink-500/30"><span class="text-pink-300 font-semibold">HDFC</span></div>
+            <div class="w-24 h-24 bg-white/5 rounded-2xl flex items-center justify-center border border-purple-500/30"><span class="text-purple-300 font-semibold">ICICI</span></div>
+            <div class="w-24 h-24 bg-white/5 rounded-2xl flex items-center justify-center border border-pink-500/30"><span class="text-pink-300 font-semibold">Axis</span></div>
+            <div class="w-24 h-24 bg-white/5 rounded-2xl flex items-center justify-center border border-purple-500/30"><span class="text-purple-300 font-semibold">Kotak</span></div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: PRICING PLANS -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h2 class="text-3xl font-bold text-center text-white mb-8 glow-text">Simple, transparent pricing</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="feature-card p-8 rounded-2xl text-center">
+                <h3 class="text-2xl font-bold text-purple-400 mb-2">Free</h3>
+                <p class="text-4xl font-bold mb-4">₹0</p>
+                <ul class="text-left space-y-2 mb-6 text-sm">
+                    <li><i class="fas fa-check text-green-400 mr-2"></i> Basic fraud alerts</li>
+                    <li><i class="fas fa-check text-green-400 mr-2"></i> Monthly stress score</li>
+                    <li><i class="fas fa-check text-green-400 mr-2"></i> 1 account connection</li>
+                </ul>
+                <a href="register.html" class="block bg-purple-600 hover:bg-purple-500 text-white py-2 rounded-xl">Start Free</a>
+            </div>
+            <div class="feature-card p-8 rounded-2xl text-center border-2 border-pink-500/50">
+                <h3 class="text-2xl font-bold text-pink-400 mb-2">Pro</h3>
+                <p class="text-4xl font-bold mb-4">₹299<span class="text-sm font-normal text-purple-300/70">/mo</span></p>
+                <ul class="text-left space-y-2 mb-6 text-sm">
+                    <li><i class="fas fa-check text-green-400 mr-2"></i> Real-time fraud monitoring</li>
+                    <li><i class="fas fa-check text-green-400 mr-2"></i> Weekly stress insights</li>
+                    <li><i class="fas fa-check text-green-400 mr-2"></i> Up to 5 accounts</li>
+                    <li><i class="fas fa-check text-green-400 mr-2"></i> Priority support</li>
+                </ul>
+                <a href="register.html" class="block bg-pink-600 hover:bg-pink-500 text-white py-2 rounded-xl">Get Pro</a>
+            </div>
+            <div class="feature-card p-8 rounded-2xl text-center">
+                <h3 class="text-2xl font-bold text-purple-400 mb-2">Business</h3>
+                <p class="text-4xl font-bold mb-4">₹999<span class="text-sm font-normal text-purple-300/70">/mo</span></p>
+                <ul class="text-left space-y-2 mb-6 text-sm">
+                    <li><i class="fas fa-check text-green-400 mr-2"></i> All Pro features</li>
+                    <li><i class="fas fa-check text-green-400 mr-2"></i> Unlimited accounts</li>
+                    <li><i class="fas fa-check text-green-400 mr-2"></i> API access</li>
+                    <li><i class="fas fa-check text-green-400 mr-2"></i> Dedicated account manager</li>
+                </ul>
+                <a href="register.html" class="block bg-purple-600 hover:bg-purple-500 text-white py-2 rounded-xl">Contact Sales</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: DOWNLOAD APP -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-purple-500/20">
+        <div class="bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-3xl p-12 text-center backdrop-blur-sm border border-purple-500/30">
+            <h2 class="text-4xl font-bold text-white mb-4">Get the FinShield App</h2>
+            <p class="text-purple-200 mb-8">Monitor your finances on the go. Available for iOS and Android.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#" class="bg-black/60 hover:bg-black/80 text-white px-6 py-3 rounded-xl flex items-center gap-2 border border-purple-500/30"><i class="fab fa-apple text-2xl"></i> App Store</a>
+                <a href="#" class="bg-black/60 hover:bg-black/80 text-white px-6 py-3 rounded-xl flex items-center gap-2 border border-pink-500/30"><i class="fab fa-google-play text-2xl"></i> Google Play</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: SECURITY & TRUST BADGES -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="flex flex-wrap justify-center gap-8 items-center">
+            <div class="flex items-center gap-2"><i class="fas fa-lock text-purple-400 text-3xl"></i><span>256-bit encryption</span></div>
+            <div class="flex items-center gap-2"><i class="fas fa-shield-alt text-pink-400 text-3xl"></i><span>ISO 27001 certified</span></div>
+            <div class="flex items-center gap-2"><i class="fas fa-credit-card text-purple-400 text-3xl"></i><span>PCI DSS compliant</span></div>
+            <div class="flex items-center gap-2"><i class="fas fa-user-shield text-pink-400 text-3xl"></i><span>Biometric login</span></div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: FAQ -->
+    <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-purple-500/20">
+        <h2 class="text-3xl font-bold text-center text-white mb-8 glow-text">Frequently Asked Questions</h2>
+        <div class="space-y-4">
+            <details class="feature-card p-4 rounded-xl">
+                <summary class="font-semibold cursor-pointer">Is my data really secure?</summary>
+                <p class="mt-2 text-purple-100/70 text-sm">Absolutely. We use bank-level encryption and never share your personal information. Read our privacy policy for details.</p>
+            </details>
+            <details class="feature-card p-4 rounded-xl">
+                <summary class="font-semibold cursor-pointer">Can I cancel anytime?</summary>
+                <p class="mt-2 text-purple-100/70 text-sm">Yes, you can cancel your subscription with one click. No hidden fees.</p>
+            </details>
+            <details class="feature-card p-4 rounded-xl">
+                <summary class="font-semibold cursor-pointer">Which banks are supported?</summary>
+                <p class="mt-2 text-purple-100/70 text-sm">We support all major Indian banks including SBI, HDFC, ICICI, Axis, Kotak, and more. New banks added regularly.</p>
+            </details>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: LATEST FROM BLOG -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h2 class="text-3xl font-bold text-center text-white mb-8 glow-text">Latest from our blog</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="feature-card p-4 rounded-xl">
+                <div class="h-32 bg-purple-900/30 rounded-lg mb-3 flex items-center justify-center text-purple-400">📰</div>
+                <h3 class="font-semibold">5 signs your credit card is compromised</h3>
+                <p class="text-xs text-purple-300/60 mt-1">2 days ago · 5 min read</p>
+            </div>
+            <div class="feature-card p-4 rounded-xl">
+                <div class="h-32 bg-pink-900/30 rounded-lg mb-3 flex items-center justify-center text-pink-400">📈</div>
+                <h3 class="font-semibold">How to improve your financial stress score</h3>
+                <p class="text-xs text-purple-300/60 mt-1">5 days ago · 4 min read</p>
+            </div>
+            <div class="feature-card p-4 rounded-xl">
+                <div class="h-32 bg-purple-900/30 rounded-lg mb-3 flex items-center justify-center text-purple-400">🔒</div>
+                <h3 class="font-semibold">New feature: Real-time fraud alerts</h3>
+                <p class="text-xs text-purple-300/60 mt-1">1 week ago · 3 min read</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- bottom CTA (updated purple) -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <div class="bg-gradient-to-r from-purple-900/30 to-pink-900/30 border border-purple-500/30 rounded-3xl p-12 text-center backdrop-blur-sm">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Start Your Financial Journey Today!</h2>
+            <p class="text-purple-200 mb-8">Join thousands of users who trust FinShield AI for proactive fraud prevention.</p>
+            <a href="register.html" class="inline-block bg-purple-600 hover:bg-purple-500 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-md btn-scale transition">Open Free Account <i class="fas fa-arrow-right ml-2"></i></a>
+        </div>
+    </section>
+
+    <!-- PHOTO GALLERY (as featured in) -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h2 class="text-3xl font-bold text-center text-white mb-12 glow-text">As featured in</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+            <!-- Image 1: DIAL 1930 / YES BANK -->
+            <div class="image-card p-4 flex flex-col items-center text-center">
+                <div class="w-full h-32 bg-[#0f1a2f] rounded-lg mb-3 flex items-center justify-center p-2 border border-purple-500/30">
+                    <svg width="100%" height="100%" viewBox="0 0 200 80" preserveAspectRatio="xMidYMid meet" style="background: #0a0f1a; border-radius: 0.5rem;">
+                        <text x="10" y="20" fill="#a78bfa" font-size="10" font-weight="bold">DIAL 1930</text>
+                        <text x="10" y="35" fill="#f87171" font-size="8">ONLINE FINANCIAL FRAUD</text>
+                        <text x="10" y="50" fill="#94a3b8" font-size="6">cybercrime.gov.in</text>
+                        <text x="10" y="65" fill="#94a3b8" font-size="5">#CYBERDOST</text>
+                    </svg>
+                </div>
+                <p class="text-xs text-purple-300/70">YES BANK · Fraud Alert</p>
+            </div>
+            <!-- Image 2: Manage your small Business Accounting Today -->
+            <div class="image-card p-4 flex flex-col items-center text-center">
+                <div class="w-full h-32 bg-[#0f1a2f] rounded-lg mb-3 flex items-center justify-center p-2 border border-purple-500/30">
+                    <svg width="100%" height="100%" viewBox="0 0 200 80" preserveAspectRatio="xMidYMid meet" style="background: #0a0f1a;">
+                        <text x="10" y="30" fill="#fbbf24" font-size="12" font-weight="bold">Manage your</text>
+                        <text x="10" y="50" fill="#fbbf24" font-size="16" font-weight="bold">small Business</text>
+                        <text x="10" y="70" fill="#fbbf24" font-size="14">Accounting Today</text>
+                    </svg>
+                </div>
+                <p class="text-xs text-purple-300/70">Small business tools</p>
+            </div>
+            <!-- Image 3: MetroBank -->
+            <div class="image-card p-4 flex flex-col items-center text-center">
+                <div class="w-full h-32 bg-[#0f1a2f] rounded-lg mb-3 flex items-center justify-center p-2 border border-purple-500/30">
+                    <svg width="100%" height="100%" viewBox="0 0 200 80" preserveAspectRatio="xMidYMid meet" style="background: #0a0f1a;">
+                        <text x="10" y="20" fill="#4ade80" font-size="14" font-weight="bold">MetroBank</text>
+                        <text x="10" y="40" fill="#94a3b8" font-size="8">Home · About · Services</text>
+                        <text x="10" y="60" fill="#94a3b8" font-size="8">Open Account · Login</text>
+                    </svg>
+                </div>
+                <p class="text-xs text-purple-300/70">MetroBank · Find nearest branch</p>
+            </div>
+            <!-- Image 4: JOHNSON FINANCIAL GROUP -->
+            <div class="image-card p-4 flex flex-col items-center text-center">
+                <div class="w-full h-32 bg-[#0f1a2f] rounded-lg mb-3 flex items-center justify-center p-2 border border-purple-500/30">
+                    <svg width="100%" height="100%" viewBox="0 0 200 80" preserveAspectRatio="xMidYMid meet" style="background: #0a0f1a;">
+                        <text x="10" y="20" fill="#c084fc" font-size="12" font-weight="bold">JOHNSON</text>
+                        <text x="10" y="35" fill="#c084fc" font-size="10">FINANCIAL GROUP</text>
+                        <text x="10" y="55" fill="#94a3b8" font-size="7">you don't keep banker's hours</text>
+                        <text x="10" y="70" fill="#94a3b8" font-size="7">NEITHER DO WE</text>
+                    </svg>
+                </div>
+                <p class="text-xs text-purple-300/70">Johnson · eBanking Login</p>
+            </div>
+            <!-- Image 5: Fixed Deposit ad -->
+            <div class="image-card p-4 flex flex-col items-center text-center">
+                <div class="w-full h-32 bg-[#0f1a2f] rounded-lg mb-3 flex items-center justify-center p-2 border border-purple-500/30">
+                    <svg width="100%" height="100%" viewBox="0 0 200 80" preserveAspectRatio="xMidYMid meet" style="background: #0a0f1a;">
+                        <text x="10" y="20" fill="#fcd34d" font-size="10">Some things grow</text>
+                        <text x="10" y="35" fill="#fcd34d" font-size="12" font-weight="bold">beautifully with time</text>
+                        <text x="10" y="55" fill="#94a3b8" font-size="8">Book a Fixed Deposit</text>
+                        <text x="10" y="70" fill="#f87171" font-size="6">up to 7.75% p.a.</text>
+                    </svg>
+                </div>
+                <p class="text-xs text-purple-300/70">Fixed Deposit · up to 7.75%</p>
+            </div>
+        </div>
+        <p class="text-center text-purple-400/40 text-xs mt-6">Replace these SVG placeholders with your actual screenshot images.</p>
+    </section>
+
+    <!-- removed chart initialization (no longer needed) -->
+    <script>
+        (function() {
+            // Counter animation for the new total transactions (optional)
+            const counterEl = document.querySelector('.text-purple-300.text-sm'); // the one inside the card
+            // We'll skip automatic counter to keep numbers static as in image
+        })();
+    </script>
+
+    <!-- original simple footer -->
+    <footer class="border-t border-purple-500/20 py-6" style="background: #0b0e14;">
+        <div class="max-w-7xl mx-auto px-4 text-center text-purple-400/50 text-sm">© 2025 FinShield AI — proactive financial well‑being</div>
+    </footer>
+
+    <!-- BESTMONEY FOOTER SECTION (updated with purple accents) -->
+    <footer class="bg-[#0b0e14] border-t border-purple-500/20 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white/70 text-sm">
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-white mb-2">Written by Bestmoney Staff</h3>
+                <p class="max-w-3xl">The BestMoney editorial team is composed of writers and experts covering a full range of financial services. Our mission is to simplify the process of selecting the right provider for every need, leveraging our extensive industry knowledge to deliver clear, reliable advice.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 border-y border-purple-500/20 py-6">
+                <div>
+                    <p class="font-semibold text-purple-300">BestMoney</p>
+                    <p>Copyright © 2009-2026 Natural Intelligence Ltd. All Rights Reserved.</p>
+                    <p>By using our content, products & services you agree to our Terms of Use and Privacy Policy.</p>
+                    <p class="mt-2">Bestmoney is a data of Natural Intelligence Technologies Inc. NMLS # 2084135</p>
+                </div>
+                <div>
+                    <p class="font-semibold text-purple-300">Mailing address:</p>
+                    <p>4023 Kennett Pike #50055</p>
+                    <p>Wilmington, DE 19807</p>
+                    <p class="mt-4 font-semibold text-purple-300">Mortgage Licenses</p>
+                    <p>NMLS Consumer Access</p>
+                </div>
+                <div>
+                    <p class="font-semibold text-purple-300 mb-2">Connect</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="bestmoney-link"><i class="fab fa-facebook-f text-xl"></i></a>
+                        <a href="#" class="bestmoney-link"><i class="fab fa-linkedin-in text-xl"></i></a>
+                        <a href="#" class="bestmoney-link"><i class="fab fa-x-twitter text-xl"></i></a>
+                    </div>
+                    <p class="mt-4"><a href="#" class="bestmoney-link underline">Don't Sell My Personal Information</a></p>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-x-6 gap-y-2 justify-center my-6 text-xs">
+                <a href="#" class="bestmoney-link">About Us</a>
+                <a href="#" class="bestmoney-link">Cookie Policy</a>
+                <a href="#" class="bestmoney-link">Terms Of Use</a>
+                <a href="#" class="bestmoney-link">Partner With Us</a>
+                <a href="#" class="bestmoney-link">Privacy Policy</a>
+                <a href="#" class="bestmoney-link">Contact</a>
+                <a href="#" class="bestmoney-link">Sitemap</a>
+            </div>
+
+            <div class="space-y-4 text-xs text-white/40 leading-relaxed">
+                <p>Designed to help users make confident decisions online, this website contains information about a wide range of products and services. Certain details, including but not limited to prices and special offers, are provided to us directly from our partners and are dynamic and subject to change at any time without prior notice. Though based on meticulous research, the information we share does not constitute legal or professional advice or forecast, and should not be treated as such. Company listings on this site DO NOT imply endorsement.</p>
+                <p>We are not an investment adviser, loan provider, or a broker and we do not offer loans or mortgages directly to end users, but only allows users to match with lending partners and platforms that may extend a loan. All loan approval decisions and terms are determined by the loan providers at the time of your application with them. Any matching request submitted through our website does not constitute a loan application and you will have to submit a loan application to the respective lender before the lender provides you with an actual offer. We do not warrant that you will be approved for a loan, nor that you will be offered a loan with the same terms presented on our website.</p>
+                <p>Insurance services are offered through Natural Intelligence Technologies Inc., a licensed insurance producer (NPN: 19016703). Services may not be available in all states. Additional licensing information can be found <a href="#" class="text-purple-400 hover:underline">here</a>. Insurance products are governed by the terms in the applicable insurance policy. Approval for coverage, premiums, commissions and fees, and other policy obligations are the sole responsibility of the underwriting insurer. The information on this site does not modify any insurance policy terms in any way.</p>
+                <p>Reproduction in whole or in part is strictly prohibited.</p>
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-purple-500/20 text-xs text-white/40">
+                <p class="font-semibold text-white/60 mb-2">Advertiser disclaimer</p>
+                <p>This site is a free online resource that strives to offer helpful content and comparison features to our visitors. We accept advertising compensation from companies that appear on the site, which may impact the location and order in which brands (and/or their products) are presented, and may also impact the score that is assigned to it. Company listings on this page DO NOT imply endorsement. We do not feature all providers on the market. Except as expressly set forth in our Terms of Use, all representations and warranties regarding the information presented on this page are disclaimed. The information, including pricing, which appears on this site is subject to change at any time.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

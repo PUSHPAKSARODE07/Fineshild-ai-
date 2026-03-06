@@ -1,0 +1,43 @@
+finShield-ai/
+│
+├── index.html
+├── login.html
+├── register.html
+├── dashboard.html
+├── upload_statement.html
+├── history.html
+├── analytics.html
+├── styles.css          (your global CSS file)
+├── scripts.js          (your global JS file)
+│
+├── assets/
+│   ├── images/         (all image files)
+│   │   ├── logo.svg
+│   │   ├── favicon.ico
+│   │   ├── hero-bg.jpg
+│   │   ├── dashboard-preview.png
+│   │   ├── fraud-map.png
+│   │   ├── testimonials/
+│   │   │   ├── user1.jpg
+│   │   │   ├── user2.jpg
+│   │   │   └── user3.jpg
+│   │   └── screenshots/
+│   │       ├── yes-bank-fraud.jpg
+│   │       ├── small-business.jpg
+│   │       ├── metro-bank.jpg
+│   │       ├── johnson-financial.jpg
+│   │       └── fixed-deposit.jpg
+│   │
+│   ├── icons/          (custom icon sets, if any)
+│   │   └── custom-icons.svg
+│   │
+│   ├── fonts/          (self-hosted fonts, if not using Google Fonts)
+│   │   └── inter/      (Inter font family files)
+│   │       ├── Inter-Regular.woff2
+│   │       ├── Inter-Medium.woff2
+│   │       └── Inter-Bold.woff2
+│   │
+│   └── docs/           (documentation, sample files)
+│       ├── sample_basic.pdf
+│       ├── sample_fraud.csv
+│       └── sample_stress.ofx

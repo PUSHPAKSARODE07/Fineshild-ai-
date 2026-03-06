@@ -1,0 +1,21 @@
+Date,Description,Debit,Credit,Balance
+01-Jan-2026,Salary Credit - XYZ Pvt Ltd,,75000.00,87350.00
+02-Jan-2026,UPI Payment - Groceries,2350.00,,85000.00
+03-Jan-2026,Card Purchase - Online Shopping,8999.00,,76001.00
+05-Jan-2026,Electricity Bill Payment,2100.00,,73901.00
+07-Jan-2026,EMI - Personal Loan,7500.00,,66401.00
+10-Jan-2026,ATM Withdrawal,5000.00,,61401.00
+12-Jan-2026,Card Purchase - Dining,2800.00,,58601.00
+15-Jan-2026,Late EMI - Home Loan (EMI overdue),24500.00,,34101.00
+16-Jan-2026,OD Interest,1250.00,,32851.00
+17-Jan-2026,Overdraft Charge,750.00,,32101.00
+18-Jan-2026,UPI - Fuel,1800.00,,30301.00
+20-Jan-2026,Late EMI - Credit Card (EMI overdue),6000.00,,24301.00
+21-Jan-2026,OD Interest,980.00,,23321.00
+22-Jan-2026,Overdraft Charge,600.00,,22721.00
+24-Jan-2026,UPI - Online Subscription,499.00,,22222.00
+25-Jan-2026,UPI - Groceries,3200.00,,19022.00
+27-Jan-2026,Late EMI - Auto Loan (EMI overdue),11500.00,,7522.00
+28-Jan-2026,OD Interest,1120.00,,6402.00
+29-Jan-2026,Overdraft Charge,750.00,,5652.00
+31-Jan-2026,Card Purchase - Miscellaneous,2371.55,,3280.45

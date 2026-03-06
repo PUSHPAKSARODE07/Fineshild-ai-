@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinShield AI · Upload Statement</title>
+    <!-- Tailwind + fonts + icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b0e14;
+            min-height: 100vh;
+            margin: 0;
+            position: relative;
+            overflow-x: hidden;
+            color: #e2e8f0;
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(139, 92, 246, 0.2);
+            pointer-events: none;
+            z-index: 0;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-20px) translateX(10px); }
+            100% { transform: translateY(0px) translateX(0px); }
+        }
+        .glass-card {
+            background: rgba(15, 20, 30, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 30px rgba(139, 92, 246, 0.3);
+            z-index: 10;
+            position: relative;
+        }
+        .glass-card-sm {
+            background: rgba(20, 25, 35, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 1rem;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6, #d946ef);
+            border: none;
+            border-radius: 1rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            color: white;
+            transition: all 0.2s;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+        }
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.8);
+        }
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 1rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            color: white;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .btn-secondary:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: #a78bfa;
+        }
+        .glow-text {
+            text-shadow: 0 0 8px rgba(139, 92, 246, 0.7);
+        }
+        .upload-zone {
+            border: 2px dashed rgba(139, 92, 246, 0.5);
+            border-radius: 1.5rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .upload-zone:hover {
+            border-color: #a78bfa;
+            background: rgba(139, 92, 246, 0.1);
+        }
+        .upload-zone.dragover {
+            border-color: #a78bfa;
+            background: rgba(139, 92, 246, 0.2);
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+        }
+        .file-item {
+            background: rgba(30, 35, 45, 0.6);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 1rem;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+        .progress-bar {
+            height: 0.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 0.25rem;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8b5cf6, #d946ef);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .badge {
+            background: rgba(139, 92, 246, 0.2);
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            border-radius: 2rem;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            color: #a78bfa;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- animated particles -->
+    <script>
+        (function() {
+            for (let i = 0; i < 12; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 200 + 50;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.background = `rgba(${Math.random()*100+100}, ${Math.random()*50}, 255, 0.1)`;
+                particle.style.filter = 'blur(40px)';
+                particle.style.animation = `float ${Math.random()*10+10}s infinite`;
+                document.body.appendChild(particle);
+            }
+        })();
+    </script>
+
+    <!-- navbar (same as index) -->
+    <nav class="bg-[#0f1219]/90 backdrop-blur-sm border-b border-purple-500/30 sticky top-0 z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-shield-halved text-purple-400 text-2xl glow-text"></i>
+                    <span class="font-bold text-xl text-white glow-text">FinShield AI</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-purple-300 hover:text-purple-200 text-sm font-medium transition">Home</a>
+                    <a href="dashboard.html" class="text-purple-300 hover:text-purple-200 text-sm font-medium transition">Dashboard</a>
+                    <a href="upload_statement.html" class="text-purple-300 hover:text-purple-200 text-sm font-medium transition border-b-2 border-purple-400">Upload</a>
+                    <a href="history.html" class="text-purple-300 hover:text-purple-200 text-sm font-medium transition">History</a>
+                    <a href="analytics.html" class="text-purple-300 hover:text-purple-200 text-sm font-medium transition">Analytics</a>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <a href="login.html" class="text-purple-300 hover:text-purple-200 px-3 py-2 text-sm font-medium transition">Login</a>
+                    <a href="register.html" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-md btn-scale transition">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- main content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- header -->
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold text-white glow-text">Upload Statement</h1>
+            <div class="flex gap-2">
+                <span class="badge"><i class="fas fa-shield-alt mr-1"></i>256-bit encrypted</span>
+                <span class="badge"><i class="fas fa-trash-alt mr-1"></i>Auto-delete after 30d</span>
+            </div>
+        </div>
+
+        <!-- two column layout: upload wizard + tips -->
+        <div class="grid lg:grid-cols-3 gap-6">
+            <!-- left column: upload area (2/3) -->
+            <div class="lg:col-span-2">
+                <div class="glass-card p-6">
+                    <!-- step indicator -->
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white font-bold">1</div>
+                            <span class="text-purple-300">Select files</span>
+                        </div>
+                        <div class="h-px w-12 bg-purple-500/30"></div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 rounded-full bg-purple-900/50 border border-purple-500/50 flex items-center justify-center text-purple-400 font-bold">2</div>
+                            <span class="text-purple-300/70">Review</span>
+                        </div>
+                        <div class="h-px w-12 bg-purple-500/30"></div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 rounded-full bg-purple-900/50 border border-purple-500/50 flex items-center justify-center text-purple-400 font-bold">3</div>
+                            <span class="text-purple-300/70">Analyze</span>
+                        </div>
+                    </div>
+
+                    <!-- drag & drop zone -->
+                    <div id="dropZone" class="upload-zone p-8 text-center mb-4">
+                        <i class="fas fa-cloud-upload-alt text-purple-400 text-5xl mb-3"></i>
+                        <p class="text-lg font-medium text-white">Drag & drop files or <span class="text-pink-400">browse</span></p>
+                        <p class="text-sm text-purple-300/50 mt-1">Supported: PDF, CSV, OFX, QFX (max 50MB each)</p>
+                        <input type="file" id="fileInput" class="hidden" multiple accept=".pdf,.csv,.ofx,.qfx">
+                    </div>
+
+                    <!-- format badges -->
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="badge"><i class="fas fa-file-pdf text-pink-400 mr-1"></i> PDF</span>
+                        <span class="badge"><i class="fas fa-file-csv text-green-400 mr-1"></i> CSV</span>
+                        <span class="badge"><i class="fas fa-file-invoice text-blue-400 mr-1"></i> OFX</span>
+                        <span class="badge"><i class="fas fa-file-invoice text-cyan-400 mr-1"></i> QFX</span>
+                    </div>
+
+                    <!-- file list container -->
+                    <div id="fileList" class="space-y-2 max-h-60 overflow-y-auto pr-2 custom-scrollbar"></div>
+
+                    <!-- upload progress (hidden by default) -->
+                    <div id="progressContainer" class="mt-4 hidden">
+                        <div class="flex justify-between text-sm text-purple-300 mb-1">
+                            <span>Uploading <span id="uploadCount">0</span>/<span id="totalFiles">0</span></span>
+                            <span id="progressPercent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div id="progressFill" class="progress-fill"></div>
+                        </div>
+                    </div>
+
+                    <!-- action buttons -->
+                    <div class="flex gap-3 mt-6">
+                        <button id="analyzeBtn" class="btn-primary flex-1" disabled>Analyze Statements</button>
+                        <button id="clearBtn" class="btn-secondary">Clear</button>
+                    </div>
+                    <p class="text-xs text-purple-300/30 mt-2">By uploading, you agree to our <a href="#" class="text-pink-400 hover:underline">data processing terms</a>.</p>
+                </div>
+
+                <!-- sample statements card -->
+                <div class="glass-card-sm p-4 mt-6">
+                    <h3 class="text-purple-300 font-semibold mb-2 flex items-center gap-2"><i class="fas fa-flask text-pink-400"></i> Try sample statements</h3>
+                    <p class="text-sm text-purple-300/70 mb-3">Download sample files to test the analysis.</p>
+                    <div class="flex flex-wrap gap-3">
+                        <button class="btn-secondary text-sm py-2 sample-btn" data-sample="basic">📄 Basic transactions</button>
+                        <button class="btn-secondary text-sm py-2 sample-btn" data-sample="fraud">🕵️ Fraud pattern</button>
+                        <button class="btn-secondary text-sm py-2 sample-btn" data-sample="stress">📉 High stress</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- right column: tips & recent uploads -->
+            <div class="lg:col-span-1 space-y-6">
+                <!-- tips card -->
+                <div class="glass-card p-5">
+                    <h3 class="text-purple-300 font-semibold mb-3 flex items-center gap-2"><i class="fas fa-lightbulb text-pink-400"></i> Pro tips</h3>
+                    <ul class="space-y-2 text-sm text-purple-300/70">
+                        <li class="flex gap-2"><i class="fas fa-check-circle text-green-400 mt-0.5"></i> Upload statements from last 12 months for best accuracy.</li>
+                        <li class="flex gap-2"><i class="fas fa-check-circle text-green-400 mt-0.5"></i> PDF statements should be machine-readable (not scanned).</li>
+                        <li class="flex gap-2"><i class="fas fa-check-circle text-green-400 mt-0.5"></i> You can upload multiple files at once.</li>
+                        <li class="flex gap-2"><i class="fas fa-check-circle text-green-400 mt-0.5"></i> Data is automatically deleted after 30 days.</li>
+                    </ul>
+                </div>
+
+                <!-- recent uploads (static example) -->
+                <div class="glass-card p-5">
+                    <h3 class="text-purple-300 font-semibold mb-3 flex items-center gap-2"><i class="fas fa-history text-pink-400"></i> Recent uploads</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div><i class="fas fa-file-pdf text-pink-400 mr-2"></i><span class="text-sm">statement_mar.pdf</span></div>
+                            <span class="text-xs text-purple-300/50">2 days ago</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div><i class="fas fa-file-csv text-green-400 mr-2"></i><span class="text-sm">transactions_feb.csv</span></div>
+                            <span class="text-xs text-purple-300/50">1 week ago</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div><i class="fas fa-file-invoice text-blue-400 mr-2"></i><span class="text-sm">bank_statement.ofx</span></div>
+                            <span class="text-xs text-purple-300/50">2 weeks ago</span>
+                        </div>
+                    </div>
+                    <a href="history.html" class="block text-center text-pink-400 hover:text-pink-300 text-sm mt-3">View all →</a>
+                </div>
+
+                <!-- security badge -->
+                <div class="glass-card-sm p-4 border border-purple-500/30 text-center">
+                    <i class="fas fa-lock text-purple-400 text-2xl mb-2"></i>
+                    <p class="text-xs text-purple-300/70">End-to-end encrypted. Your data never leaves your control.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- footer (simplified) -->
+    <footer class="border-t border-purple-500/20 py-6 mt-8" style="background: #0b0e14;">
+        <div class="max-w-7xl mx-auto px-4 text-center text-purple-400/50 text-sm">© 2025 FinShield AI — proactive financial well‑being</div>
+    </footer>
+
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(139, 92, 246, 0.5);
+            border-radius: 10px;
+        }
+    </style>
+
+    <script>
+        (function() {
+            // DOM elements
+            const dropZone = document.getElementById('dropZone');
+            const fileInput = document.getElementById('fileInput');
+            const fileList = document.getElementById('fileList');
+            const analyzeBtn = document.getElementById('analyzeBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const progressContainer = document.getElementById('progressContainer');
+            const progressFill = document.getElementById('progressFill');
+            const uploadCount = document.getElementById('uploadCount');
+            const totalFiles = document.getElementById('totalFiles');
+            const progressPercent = document.getElementById('progressPercent');
+
+            // Sample files data (mock)
+            const samples = {
+                basic: { name: 'sample_basic.pdf', size: 12400 },
+                fraud: { name: 'sample_fraud.csv', size: 8700 },
+                stress: { name: 'sample_stress.ofx', size: 15300 }
+            };
+
+            let files = [];
+
+            // Update file list UI
+            function renderFileList() {
+                if (files.length === 0) {
+                    fileList.innerHTML = '<p class="text-purple-300/50 text-sm text-center py-4">No files selected</p>';
+                    analyzeBtn.disabled = true;
+                } else {
+                    let html = '';
+                    files.forEach((file, index) => {
+                        html += `
+                            <div class="file-item flex items-center justify-between">
+                                <div class="flex items-center gap-3 truncate">
+                                    <i class="fas ${getFileIcon(file.name)} text-purple-400"></i>
+                                    <div class="truncate">
+                                        <p class="text-sm font-medium truncate">${file.name}</p>
+                                        <p class="text-xs text-purple-300/50">${formatBytes(file.size)}</p>
+                                    </div>
+                                </div>
+                                <button class="text-purple-400 hover:text-pink-400 remove-file" data-index="${index}">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        `;
+                    });
+                    fileList.innerHTML = html;
+                    analyzeBtn.disabled = false;
+
+                    // Attach remove event
+                    document.querySelectorAll('.remove-file').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const index = btn.dataset.index;
+                            files.splice(index, 1);
+                            renderFileList();
+                        });
+                    });
+                }
+            }
+
+            function getFileIcon(filename) {
+                const ext = filename.split('.').pop().toLowerCase();
+                if (ext === 'pdf') return 'fa-file-pdf text-pink-400';
+                if (ext === 'csv') return 'fa-file-csv text-green-400';
+                if (ext === 'ofx' || ext === 'qfx') return 'fa-file-invoice text-blue-400';
+                return 'fa-file text-purple-400';
+            }
+
+            function formatBytes(bytes) {
+                if (bytes < 1024) return bytes + ' B';
+                if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+                return (bytes / 1048576).toFixed(1) + ' MB';
+            }
+
+            // Validate file type & size
+            function isValidFile(file) {
+                const validTypes = ['application/pdf', 'text/csv', 'application/vnd.ms-excel', 'application/ofx', 'application/x-ofx', 'text/plain'];
+                const ext = file.name.split('.').pop().toLowerCase();
+                if (!['pdf', 'csv', 'ofx', 'qfx'].includes(ext)) return false;
+                if (file.size > 50 * 1024 * 1024) return false; // 50MB
+                return true;
+            }
+
+            // Handle drop / select
+            function handleFiles(selectedFiles) {
+                const newFiles = Array.from(selectedFiles).filter(isValidFile);
+                if (newFiles.length === 0) {
+                    alert('Please upload valid files (PDF, CSV, OFX, QFX, max 50MB each).');
+                    return;
+                }
+                files = [...files, ...newFiles];
+                renderFileList();
+            }
+
+            // Drag & drop events
+            dropZone.addEventListener('click', () => fileInput.click());
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('dragover');
+            });
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.classList.remove('dragover');
+            });
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('dragover');
+                handleFiles(e.dataTransfer.files);
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                handleFiles(e.target.files);
+                fileInput.value = ''; // allow re-selection
+            });
+
+            // Clear button
+            clearBtn.addEventListener('click', () => {
+                files = [];
+                renderFileList();
+                // hide progress if visible
+                progressContainer.classList.add('hidden');
+            });
+
+            // Analyze button (simulate upload with progress)
+            analyzeBtn.addEventListener('click', () => {
+                if (files.length === 0) return;
+
+                // Disable buttons during upload
+                analyzeBtn.disabled = true;
+                clearBtn.disabled = true;
+
+                // Show progress container
+                progressContainer.classList.remove('hidden');
+                const total = files.length;
+                totalFiles.textContent = total;
+
+                let uploaded = 0;
+                const step = 100 / total;
+
+                // Simulate file upload with interval
+                const interval = setInterval(() => {
+                    uploaded++;
+                    uploadCount.textContent = uploaded;
+                    const percent = Math.round((uploaded / total) * 100);
+                    progressFill.style.width = percent + '%';
+                    progressPercent.textContent = percent + '%';
+
+                    if (uploaded >= total) {
+                        clearInterval(interval);
+                        // After upload, redirect to dashboard (or show success)
+                        setTimeout(() => {
+                            alert('✅ Analysis complete! Redirecting to dashboard.');
+                            window.location.href = 'dashboard.html';
+                        }, 500);
+                    }
+                }, 800); // 0.8 sec per file
+            });
+
+            // Sample buttons
+            document.querySelectorAll('.sample-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const sampleKey = btn.dataset.sample;
+                    if (sampleKey && samples[sampleKey]) {
+                        // Create mock file objects
+                        const mockFile = new File([""], samples[sampleKey].name, { type: 'text/plain' });
+                        Object.defineProperty(mockFile, 'size', { value: samples[sampleKey].size });
+                        files.push(mockFile);
+                        renderFileList();
+                    }
+                });
+            });
+
+            // Terms link
+            document.querySelector('a[href="#"]').addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('📄 Data processing terms (demo).');
+            });
+
+            // Initial empty list
+            renderFileList();
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinShield AI · History</title>
+    <!-- Tailwind + fonts + icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b0e14;
+            color: #e2e8f0;
+            margin: 0;
+        }
+        .glass-card {
+            background: rgba(15, 20, 30, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 30px rgba(139, 92, 246, 0.3);
+        }
+        .glass-card-sm {
+            background: rgba(20, 25, 35, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 1rem;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6, #d946ef);
+            border: none;
+            border-radius: 0.75rem;
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            color: white;
+            transition: all 0.2s;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+        }
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.8);
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 0.75rem;
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            color: white;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .btn-secondary:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: #a78bfa;
+        }
+        .glow-text {
+            text-shadow: 0 0 8px rgba(139, 92, 246, 0.7);
+        }
+        .badge {
+            background: rgba(139, 92, 246, 0.2);
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            border-radius: 2rem;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            color: #a78bfa;
+        }
+        .badge-success {
+            background: rgba(74, 222, 128, 0.2);
+            border-color: #4ade80;
+            color: #4ade80;
+        }
+        .badge-warning {
+            background: rgba(251, 191, 36, 0.2);
+            border-color: #fbbf24;
+            color: #fbbf24;
+        }
+        .badge-danger {
+            background: rgba(244, 63, 94, 0.2);
+            border-color: #f43f5e;
+            color: #f43f5e;
+        }
+        .navbar {
+            background: rgba(15, 20, 30, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            text-align: left;
+            padding: 1rem 0.5rem 0.5rem 0.5rem;
+            color: #a78bfa;
+            font-weight: 500;
+            font-size: 0.8rem;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        td {
+            padding: 0.75rem 0.5rem;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+        }
+        tr:hover td {
+            background: rgba(139, 92, 246, 0.05);
+        }
+        .filter-input {
+            background: rgba(30, 35, 45, 0.8);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 0.75rem;
+            padding: 0.5rem 1rem;
+            color: white;
+            width: 100%;
+        }
+        .filter-input:focus {
+            outline: none;
+            border-color: #a78bfa;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar py-3 px-6 flex justify-between items-center sticky top-0 z-20">
+        <div class="flex items-center space-x-2">
+            <i class="fas fa-shield-halved text-purple-400 text-2xl"></i>
+            <span class="font-bold text-xl text-white">FinShield AI</span>
+        </div>
+        <div class="flex items-center space-x-6">
+            <a href="index.html" class="text-purple-300 hover:text-purple-200 text-sm">Home</a>
+            <a href="dashboard.html" class="text-purple-300 hover:text-purple-200 text-sm">Dashboard</a>
+            <a href="upload_statement.html" class="text-purple-300 hover:text-purple-200 text-sm">Upload</a>
+            <a href="history.html" class="text-purple-300 hover:text-purple-200 text-sm border-b-2 border-purple-400">History</a>
+            <a href="analytics.html" class="text-purple-300 hover:text-purple-200 text-sm">Analytics</a>
+            <div class="flex items-center space-x-3 ml-4">
+                <span class="text-purple-300 text-sm">Alex</span>
+                <div class="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white">A</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <!-- Header with title and actions -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+            <div>
+                <h1 class="text-3xl font-bold text-white glow-text">Transaction History</h1>
+                <p class="text-purple-300/70 text-sm">View and analyze all your past transactions</p>
+            </div>
+            <div class="flex gap-2 mt-2 md:mt-0">
+                <button class="btn-secondary text-sm py-1.5 px-3" id="exportBtn"><i class="fas fa-download mr-1"></i> Export CSV</button>
+                <button class="btn-primary text-sm py-1.5 px-3" id="refreshBtn"><i class="fas fa-sync-alt mr-1"></i> Refresh</button>
+            </div>
+        </div>
+
+        <!-- Summary stats cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <div class="glass-card-sm p-4">
+                <p class="text-purple-300 text-xs">Total Transactions</p>
+                <p class="text-2xl font-bold text-white">1,284</p>
+                <p class="text-xs text-green-400">↑ 12% from last month</p>
+            </div>
+            <div class="glass-card-sm p-4">
+                <p class="text-purple-300 text-xs">Fraudulent</p>
+                <p class="text-2xl font-bold text-white">23</p>
+                <p class="text-xs text-red-400">↓ 5% from last month</p>
+            </div>
+            <div class="glass-card-sm p-4">
+                <p class="text-purple-300 text-xs">Total Amount</p>
+                <p class="text-2xl font-bold text-white">$324,567</p>
+                <p class="text-xs text-green-400">↑ 8% from last month</p>
+            </div>
+            <div class="glass-card-sm p-4">
+                <p class="text-purple-300 text-xs">Avg Risk Score</p>
+                <p class="text-2xl font-bold text-white">32</p>
+                <p class="text-xs text-amber-400">Low risk</p>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="glass-card-sm p-4 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+                <!-- Search -->
+                <div class="relative">
+                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-purple-400/70 text-sm"></i>
+                    <input type="text" placeholder="Search transactions..." class="filter-input pl-9 text-sm">
+                </div>
+                <!-- Date range -->
+                <div class="relative">
+                    <i class="fas fa-calendar-alt absolute left-3 top-1/2 -translate-y-1/2 text-purple-400/70 text-sm"></i>
+                    <input type="text" placeholder="Date range" class="filter-input pl-9 text-sm" value="Mar 1, 2025 - Mar 31, 2025">
+                </div>
+                <!-- Type filter -->
+                <div class="relative">
+                    <i class="fas fa-filter absolute left-3 top-1/2 -translate-y-1/2 text-purple-400/70 text-sm"></i>
+                    <select class="filter-input pl-9 text-sm appearance-none">
+                        <option>All types</option>
+                        <option>Income</option>
+                        <option>Expense</option>
+                        <option>Transfer</option>
+                    </select>
+                </div>
+                <!-- Status filter -->
+                <div class="relative">
+                    <i class="fas fa-flag absolute left-3 top-1/2 -translate-y-1/2 text-purple-400/70 text-sm"></i>
+                    <select class="filter-input pl-9 text-sm appearance-none">
+                        <option>All status</option>
+                        <option>Normal</option>
+                        <option>Suspicious</option>
+                        <option>Fraudulent</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex justify-end mt-3">
+                <button class="btn-secondary text-xs py-1 px-3 mr-2"><i class="fas fa-times mr-1"></i> Clear</button>
+                <button class="btn-primary text-xs py-1 px-3"><i class="fas fa-check mr-1"></i> Apply</button>
+            </div>
+        </div>
+
+        <!-- Transactions table -->
+        <div class="glass-card overflow-hidden">
+            <div class="overflow-x-auto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Risk Score</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        <tr>
+                            <td>Mar 28, 2025</td>
+                            <td>Netflix Subscription</td>
+                            <td>Entertainment</td>
+                            <td class="text-white">-$15.99</td>
+                            <td><span class="badge badge-success">Normal</span></td>
+                            <td><span class="badge">12</span></td>
+                            <td><button class="text-purple-400 hover:text-pink-400"><i class="fas fa-eye"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td>Mar 27, 2025</td>
+                            <td>Whole Foods Market</td>
+                            <td>Groceries</td>
+                            <td class="text-white">-$89.47</td>
+                            <td><span class="badge badge-success">Normal</span></td>
+                            <td><span class="badge">8</span></td>
+                            <td><button class="text-purple-400 hover:text-pink-400"><i class="fas fa-eye"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td>Mar 26, 2025</td>
+                            <td>Shell Gas</td>
+                            <td>Transport</td>
+                            <td class="text-white">-$45.00</td>
+                            <td><span class="badge badge-warning">Suspicious</span></td>
+                            <td><span class="badge badge-warning">65</span></td>
+                            <td><button class="text-purple-400 hover:text-pink-400"><i class="fas fa-eye"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td>Mar 25, 2025</td>
+                            <td>Cafe Connect</td>
+                            <td>Dining</td>
+                            <td class="text-white">-$4.27</td>
+                            <td><span class="badge badge-success">Normal</span></td>
+                            <td><span class="badge">5</span></td>
+                            <td><button class="text-purple-400 hover:text-pink-400"><i class="fas fa-eye"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td>Mar 24, 2025</td>
+                            <td>Unknown Charge</td>
+                            <td>Other</td>
+                            <td class="text-white">-$189.00</td>
+                            <td><span class="badge badge-danger">Fraudulent</span></td>
+                            <td><span class="badge badge-danger">92</span></td>
+                            <td><button class="text-purple-400 hover:text-pink-400"><i class="fas fa-eye"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td>Mar 23, 2025</td>
+                            <td>Electric Bill</td>
+                            <td>Utilities</td>
+                            <td class="text-white">-$112.30</td>
+                            <td><span class="badge badge-success">Normal</span></td>
+                            <td><span class="badge">18</span></td>
+                            <td><button class="text-purple-400 hover:text-pink-400"><i class="fas fa-eye"></i></button></td>
+                        </tr>
+                        <tr>
+                            <td>Mar 22, 2025</td>
+                            <td>Transfer to Savings</td>
+                            <td>Transfer</td>
+                            <td class="text-white">+$500.00</td>
+                            <td><span class="badge badge-success">Normal</span></td>
+                            <td><span class="badge">2</span></td>
+                            <td><button class="text-purple-400 hover:text-pink-400"><i class="fas fa-eye"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Pagination -->
+            <div class="flex justify-between items-center p-4 border-t border-purple-500/20">
+                <p class="text-xs text-purple-300/50">Showing 1-7 of 1,284 transactions</p>
+                <div class="flex gap-2">
+                    <button class="btn-secondary text-xs py-1 px-3" disabled><i class="fas fa-chevron-left"></i></button>
+                    <button class="btn-primary text-xs py-1 px-3">1</button>
+                    <button class="btn-secondary text-xs py-1 px-3">2</button>
+                    <button class="btn-secondary text-xs py-1 px-3">3</button>
+                    <button class="btn-secondary text-xs py-1 px-3">4</button>
+                    <button class="btn-secondary text-xs py-1 px-3"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline view toggle (optional) -->
+        <div class="flex justify-end mt-4">
+            <button class="btn-secondary text-xs py-1 px-3 mr-2"><i class="fas fa-list mr-1"></i> List</button>
+            <button class="btn-primary text-xs py-1 px-3"><i class="fas fa-calendar-alt mr-1"></i> Timeline</button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center text-purple-400/50 text-xs py-4 border-t border-purple-500/20 mt-6">
+        © 2025 FinShield AI — proactive financial well‑being
+    </footer>
+
+    <script>
+        // Interactive buttons (demo)
+        document.getElementById('exportBtn').addEventListener('click', () => alert('📥 Exporting transactions as CSV...'));
+        document.getElementById('refreshBtn').addEventListener('click', () => alert('🔄 Refreshing data...'));
+        document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
+            if (!btn.closest('td')) { // avoid table action buttons
+                btn.addEventListener('click', (e) => {
+                    if (btn.textContent.includes('Apply')) alert('✅ Filters applied');
+                    else if (btn.textContent.includes('Clear')) alert('🗑️ Filters cleared');
+                    else if (btn.textContent.includes('Timeline')) alert('📅 Switching to timeline view');
+                    else if (btn.textContent.includes('List')) alert('📋 Switching to list view');
+                });
+            }
+        });
+        // Table view buttons
+        document.querySelectorAll('td button').forEach(btn => {
+            btn.addEventListener('click', () => alert('🔍 Viewing transaction details (demo).'));
+        });
+    </script>
+</body>
+</html>

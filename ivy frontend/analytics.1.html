@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinShield AI · Advanced Analytics</title>
+    <!-- Tailwind + fonts + icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b0e14;
+            color: #e2e8f0;
+            margin: 0;
+            min-height: 100vh;
+        }
+        .glass-card {
+            background: rgba(15, 20, 30, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 30px rgba(139, 92, 246, 0.3);
+        }
+        .glass-card-sm {
+            background: rgba(20, 25, 35, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 1rem;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6, #d946ef);
+            border: none;
+            border-radius: 0.75rem;
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            color: white;
+            transition: all 0.2s;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+        }
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.8);
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 0.75rem;
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            color: white;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .btn-secondary:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: #a78bfa;
+        }
+        .glow-text {
+            text-shadow: 0 0 8px rgba(139, 92, 246, 0.7);
+        }
+        .badge {
+            background: rgba(139, 92, 246, 0.2);
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            border-radius: 2rem;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            color: #a78bfa;
+        }
+        .kpi-card {
+            background: rgba(30, 35, 45, 0.6);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 1rem;
+            padding: 1.25rem;
+        }
+        .ticker-item {
+            animation: ticker 0.5s ease-in-out;
+        }
+        @keyframes ticker {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .heatmap-cell {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.375rem;
+            transition: all 0.2s;
+        }
+        .heatmap-cell:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.8);
+        }
+        .main-content {
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+            padding-bottom: 1rem;
+        }
+        .main-content::-webkit-scrollbar {
+            display: none;
+        }
+        .trend-number {
+            background: rgba(30, 35, 45, 0.8);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 0.5rem;
+            padding: 0.25rem 0.5rem;
+            min-width: 2.5rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- navbar (same as other pages) -->
+    <nav class="bg-[#0f1219]/90 backdrop-blur-sm border-b border-purple-500/30 sticky top-0 z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-shield-halved text-purple-400 text-2xl glow-text"></i>
+                    <span class="font-bold text-xl text-white glow-text">FinShield AI</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-purple-300 hover:text-purple-200 text-sm font-medium transition">Home</a>
+                    <a href="dashboard.html" class="text-purple-300 hover:text-purple-200 text-sm font-medium transition">Dashboard</a>
+                    <a href="upload_statement.html" class="text-purple-300 hover:text-purple-200 text-sm font-medium transition">Upload</a>
+                    <a href="history.html" class="text-purple-300 hover:text-purple-200 text-sm font-medium transition">History</a>
+                    <a href="analytics.html" class="text-purple-300 hover:text-purple-200 text-sm font-medium transition border-b-2 border-purple-400">Analytics</a>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <a href="login.html" class="text-purple-300 hover:text-purple-200 px-3 py-2 text-sm font-medium transition">Login</a>
+                    <a href="register.html" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-md btn-scale transition">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- main content with controlled scrolling -->
+    <div class="main-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <!-- header with title and filters -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+            <div>
+                <h1 class="text-3xl font-bold text-white glow-text">Advanced Analytics</h1>
+                <p class="text-purple-300/70 text-sm">Real-time fraud intelligence & predictive insights</p>
+            </div>
+            <div class="flex gap-2 mt-2 md:mt-0">
+                <select class="bg-[#1e2434] border border-purple-500/30 rounded-lg text-sm px-3 py-1.5 text-white">
+                    <option>Last 7 days</option>
+                    <option>Last 30 days</option>
+                    <option>Last quarter</option>
+                </select>
+                <button class="btn-secondary text-sm py-1.5 px-3"><i class="fas fa-download mr-1"></i> Export</button>
+                <button class="btn-secondary text-sm py-1.5 px-3"><i class="fas fa-share-alt mr-1"></i> Share</button>
+            </div>
+        </div>
+
+        <!-- KPI row with sparklines (simulated) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <div class="kpi-card">
+                <p class="text-purple-300 text-sm">Total Fraud Attempts</p>
+                <p class="text-3xl font-bold text-white">2,341</p>
+                <div class="flex items-center gap-2 mt-1">
+                    <span class="badge text-xs">↑ 8.3%</span>
+                    <span class="text-xs text-purple-300/70">vs last week</span>
+                </div>
+                <div class="h-8 mt-2 flex items-end gap-[2px]">
+                    <div class="w-2 bg-pink-400 h-3 rounded-t"></div>
+                    <div class="w-2 bg-pink-400 h-5 rounded-t"></div>
+                    <div class="w-2 bg-pink-400 h-4 rounded-t"></div>
+                    <div class="w-2 bg-pink-400 h-6 rounded-t"></div>
+                    <div class="w-2 bg-pink-400 h-7 rounded-t"></div>
+                    <div class="w-2 bg-pink-400 h-5 rounded-t"></div>
+                    <div class="w-2 bg-pink-400 h-4 rounded-t"></div>
+                </div>
+            </div>
+            <div class="kpi-card">
+                <p class="text-purple-300 text-sm">Detection Rate</p>
+                <p class="text-3xl font-bold text-white">94.2%</p>
+                <div class="flex items-center gap-2 mt-1">
+                    <span class="badge text-xs">↑ 2.1%</span>
+                </div>
+                <div class="h-8 mt-2 flex items-end gap-[2px]">
+                    <div class="w-2 bg-purple-400 h-6 rounded-t"></div>
+                    <div class="w-2 bg-purple-400 h-7 rounded-t"></div>
+                    <div class="w-2 bg-purple-400 h-5 rounded-t"></div>
+                    <div class="w-2 bg-purple-400 h-8 rounded-t"></div>
+                    <div class="w-2 bg-purple-400 h-6 rounded-t"></div>
+                    <div class="w-2 bg-purple-400 h-7 rounded-t"></div>
+                    <div class="w-2 bg-purple-400 h-5 rounded-t"></div>
+                </div>
+            </div>
+            <div class="kpi-card">
+                <p class="text-purple-300 text-sm">Avg. Response Time</p>
+                <p class="text-3xl font-bold text-white">1.8s</p>
+                <div class="flex items-center gap-2 mt-1">
+                    <span class="badge text-xs">↓ 0.3s</span>
+                </div>
+                <div class="h-8 mt-2 flex items-end gap-[2px]">
+                    <div class="w-2 bg-cyan-400 h-4 rounded-t"></div>
+                    <div class="w-2 bg-cyan-400 h-3 rounded-t"></div>
+                    <div class="w-2 bg-cyan-400 h-5 rounded-t"></div>
+                    <div class="w-2 bg-cyan-400 h-2 rounded-t"></div>
+                    <div class="w-2 bg-cyan-400 h-4 rounded-t"></div>
+                    <div class="w-2 bg-cyan-400 h-3 rounded-t"></div>
+                    <div class="w-2 bg-cyan-400 h-5 rounded-t"></div>
+                </div>
+            </div>
+            <div class="kpi-card">
+                <p class="text-purple-300 text-sm">Active Rules</p>
+                <p class="text-3xl font-bold text-white">147</p>
+                <div class="flex items-center gap-2 mt-1">
+                    <span class="badge text-xs">+12 new</span>
+                </div>
+                <div class="h-8 mt-2 flex items-end gap-[2px]">
+                    <div class="w-2 bg-amber-400 h-5 rounded-t"></div>
+                    <div class="w-2 bg-amber-400 h-6 rounded-t"></div>
+                    <div class="w-2 bg-amber-400 h-4 rounded-t"></div>
+                    <div class="w-2 bg-amber-400 h-7 rounded-t"></div>
+                    <div class="w-2 bg-amber-400 h-5 rounded-t"></div>
+                    <div class="w-2 bg-amber-400 h-6 rounded-t"></div>
+                    <div class="w-2 bg-amber-400 h-4 rounded-t"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- real-time transaction ticker -->
+        <div class="glass-card-sm p-3 mb-6 overflow-hidden">
+            <div class="flex items-center gap-3 text-xs">
+                <span class="badge flex items-center gap-1"><i class="fas fa-circle text-green-400 text-[6px]"></i> LIVE</span>
+                <span class="text-purple-300/70">Latest fraud attempts:</span>
+                <div id="ticker" class="flex-1 overflow-hidden whitespace-nowrap">
+                    <span class="ticker-item inline-block mr-4">⚠️ $1,200 flagged in New York</span>
+                    <span class="ticker-item inline-block mr-4">⚠️ Unusual login from Mumbai</span>
+                    <span class="ticker-item inline-block mr-4">⚠️ Card test in London</span>
+                    <span class="ticker-item inline-block mr-4">⚠️ Phishing campaign detected</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- main row: Anomaly timeline (JUST NUMBERS) + Forecast gauge + Heatmap -->
+        <div class="grid lg:grid-cols-3 gap-4 mb-6">
+            <!-- Anomaly timeline - NUMBERS ONLY (increasing) -->
+            <div class="glass-card p-4 lg:col-span-1">
+                <h3 class="text-purple-300 font-semibold text-sm mb-2">Anomaly Timeline (Increasing)</h3>
+                <div class="grid grid-cols-4 gap-2">
+                    <div class="trend-number">
+                        <div class="text-[10px] text-purple-300/70">00</div>
+                        <div class="text-sm font-bold text-white">2.0</div>
+                    </div>
+                    <div class="trend-number">
+                        <div class="text-[10px] text-purple-300/70">01</div>
+                        <div class="text-sm font-bold text-white">2.2</div>
+                    </div>
+                    <div class="trend-number">
+                        <div class="text-[10px] text-purple-300/70">02</div>
+                        <div class="text-sm font-bold text-white">2.5</div>
+                    </div>
+                    <div class="trend-number">
+                        <div class="text-[10px] text-purple-300/70">03</div>
+                        <div class="text-sm font-bold text-white">2.7</div>
+                    </div>
+                    <div class="trend-number">
+                        <div class="text-[10px] text-purple-300/70">04</div>
+                        <div class="text-sm font-bold text-white">3.0</div>
+                    </div>
+                    <div class="trend-number">
+                        <div class="text-[10px] text-purple-300/70">05</div>
+                        <div class="text-sm font-bold text-white">3.2</div>
+                    </div>
+                    <div class="trend-number">
+                        <div class="text-[10px] text-purple-300/70">06</div>
+                        <div class="text-sm font-bold text-white">3.5</div>
+                    </div>
+                    <div class="trend-number">
+                        <div class="text-[10px] text-purple-300/70">07</div>
+                        <div class="text-sm font-bold text-white">3.7</div>
+                    </div>
+                    <div class="trend-number">
+                        <div class="text-[10px] text-purple-300/70">08</div>
+                        <div class="text-sm font-bold text-white">4.0</div>
+                    </div>
+                    <div class="trend-number">
+                        <div class="text-[10px] text-purple-300/70">09</div>
+                        <div class="text-sm font-bold text-white">4.2</div>
+                    </div>
+                    <div class="trend-number">
+                        <div class="text-[10px] text-purple-300/70">10</div>
+                        <div class="text-sm font-bold text-white">4.5</div>
+                    </div>
+                    <div class="trend-number">
+                        <div class="text-[10px] text-purple-300/70">11</div>
+                        <div class="text-sm font-bold text-white">4.7</div>
+                    </div>
+                </div>
+                <p class="text-xs text-purple-300/50 mt-3">Values increasing steadily over 12 hours</p>
+            </div>
+            <!-- Risk forecast gauge -->
+            <div class="glass-card p-4 lg:col-span-1">
+                <h3 class="text-purple-300 font-semibold text-sm mb-2">Risk Forecast (Next 24h)</h3>
+                <div class="flex items-center justify-center">
+                    <div class="relative w-32 h-32">
+                        <canvas id="gaugeChart" class="w-full h-full"></canvas>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-2xl font-bold text-white">35%</p>
+                        <p class="text-xs text-purple-300/70">Low risk</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Geographic fraud heatmap (simulated grid) -->
+            <div class="glass-card p-4 lg:col-span-1">
+                <h3 class="text-purple-300 font-semibold text-sm mb-2">Fraud Heatmap (Top Regions)</h3>
+                <div class="grid grid-cols-5 gap-1">
+                    <div class="heatmap-cell bg-pink-400/80"></div>
+                    <div class="heatmap-cell bg-pink-400/60"></div>
+                    <div class="heatmap-cell bg-pink-400/30"></div>
+                    <div class="heatmap-cell bg-pink-400/50"></div>
+                    <div class="heatmap-cell bg-pink-400/80"></div>
+                    <div class="heatmap-cell bg-pink-400/20"></div>
+                    <div class="heatmap-cell bg-pink-400/70"></div>
+                    <div class="heatmap-cell bg-pink-400/90"></div>
+                    <div class="heatmap-cell bg-pink-400/40"></div>
+                    <div class="heatmap-cell bg-pink-400/60"></div>
+                    <div class="heatmap-cell bg-pink-400/80"></div>
+                    <div class="heatmap-cell bg-pink-400/30"></div>
+                    <div class="heatmap-cell bg-pink-400/50"></div>
+                    <div class="heatmap-cell bg-pink-400/70"></div>
+                    <div class="heatmap-cell bg-pink-400/20"></div>
+                </div>
+                <p class="text-xs text-purple-300/50 mt-2">High activity: US, IN, GB</p>
+            </div>
+        </div>
+
+        <!-- second row: ML insights + Category table + Pie chart (enhanced) -->
+        <div class="grid lg:grid-cols-3 gap-4 mb-6">
+            <!-- Machine learning insight card -->
+            <div class="glass-card p-4 lg:col-span-1">
+                <div class="flex items-center gap-2 mb-2">
+                    <i class="fas fa-brain text-purple-400"></i>
+                    <h3 class="text-purple-300 font-semibold text-sm">AI Insight</h3>
+                </div>
+                <p class="text-sm text-purple-100/80">New phishing pattern detected targeting small businesses. <span class="text-pink-400">+27%</span> in last 2 days.</p>
+                <div class="mt-3 flex gap-2">
+                    <span class="badge text-xs">Confidence 92%</span>
+                    <button class="btn-secondary text-xs py-1 px-2">Investigate</button>
+                </div>
+            </div>
+            <!-- Top fraud categories (table with trend) -->
+            <div class="glass-card p-4 lg:col-span-1">
+                <h3 class="text-purple-300 font-semibold text-sm mb-2">Top Categories (with trend)</h3>
+                <table class="w-full text-xs">
+                    <tr><td>Phishing</td><td class="text-right">1,204</td><td class="text-right text-green-400">↑12%</td></tr>
+                    <tr><td>Card Fraud</td><td class="text-right">892</td><td class="text-right text-red-400">↓3%</td></tr>
+                    <tr><td>Identity Theft</td><td class="text-right">654</td><td class="text-right text-green-400">↑5%</td></tr>
+                    <tr><td>Account Takeover</td><td class="text-right">431</td><td class="text-right text-green-400">↑8%</td></tr>
+                </table>
+            </div>
+            <!-- Fraud type distribution (doughnut) -->
+            <div class="glass-card p-4 lg:col-span-1">
+                <h3 class="text-purple-300 font-semibold text-sm mb-2">Fraud Type Distribution</h3>
+                <div class="flex items-center gap-2">
+                    <canvas id="pieChart" class="w-20 h-20"></canvas>
+                    <div class="text-xs space-y-1">
+                        <div><span class="inline-block w-2 h-2 bg-pink-400 rounded-full mr-1"></span> Phishing 40%</div>
+                        <div><span class="inline-block w-2 h-2 bg-purple-400 rounded-full mr-1"></span> Card Fraud 30%</div>
+                        <div><span class="inline-block w-2 h-2 bg-cyan-400 rounded-full mr-1"></span> Identity 20%</div>
+                        <div><span class="inline-block w-2 h-2 bg-amber-400 rounded-full mr-1"></span> Other 10%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- bottom row: predictive model accuracy + buttons -->
+        <div class="glass-card-sm p-4 flex flex-wrap items-center justify-between">
+            <div class="flex items-center gap-4">
+                <span class="badge text-sm">Model Accuracy: 97.3%</span>
+                <span class="badge text-sm">Next retrain: 2h</span>
+            </div>
+            <div class="flex gap-2">
+                <button class="btn-primary text-sm py-1.5 px-3"><i class="fas fa-chart-line mr-1"></i> Run Prediction</button>
+                <button class="btn-secondary text-sm py-1.5 px-3"><i class="fas fa-download mr-1"></i> Download Report</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <footer class="border-t border-purple-500/20 py-4 mt-6 text-center text-purple-400/50 text-sm">
+        © 2025 FinShield AI — proactive financial well‑being
+    </footer>
+
+    <script>
+        (function() {
+            // Gauge chart (doughnut with a needle effect - simplified)
+            const gaugeCtx = document.getElementById('gaugeChart').getContext('2d');
+            new Chart(gaugeCtx, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [35, 65],
+                        backgroundColor: ['#4ade80', '#2d3748'],
+                        borderColor: 'transparent',
+                        circumference: 180,
+                        rotation: 270,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: { legend: { display: false }, tooltip: { enabled: false } },
+                    cutout: '80%',
+                }
+            });
+
+            // Pie chart
+            const pieCtx = document.getElementById('pieChart').getContext('2d');
+            new Chart(pieCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Phishing', 'Card Fraud', 'Identity', 'Other'],
+                    datasets: [{
+                        data: [40, 30, 20, 10],
+                        backgroundColor: ['#d946ef', '#8b5cf6', '#22d3ee', '#fbbf24'],
+                        borderColor: 'transparent',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: { legend: { display: false } },
+                    cutout: '65%',
+                }
+            });
+
+            // Simulate ticker rotation
+            const ticker = document.getElementById('ticker');
+            let items = ticker.children;
+            setInterval(() => {
+                if (items.length > 0) {
+                    ticker.appendChild(items[0].cloneNode(true));
+                    ticker.removeChild(items[0]);
+                }
+            }, 3000);
+
+            // Button actions
+            document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    if (btn.classList.contains('btn-primary') && btn.textContent.includes('Run Prediction')) {
+                        alert('🚀 Running predictive model... (demo)');
+                    } else if (btn.classList.contains('btn-secondary') && btn.textContent.includes('Download')) {
+                        alert('📄 Downloading report...');
+                    } else if (btn.textContent.includes('Investigate')) {
+                        alert('🔍 Investigating insight...');
+                    } else if (btn.textContent.includes('Export') || btn.textContent.includes('Share')) {
+                        alert('🔗 Export/Share demo');
+                    }
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
